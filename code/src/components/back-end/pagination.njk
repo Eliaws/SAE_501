@@ -1,0 +1,78 @@
+{% macro previous(url, is_disabled = false) %}
+    <a aria-label="Précédent" href="{{ url }}" {{ "inert" if is_disabled else "" }}  class="inert:text-gray-500 inert:opacity-30 gap-x-2 items-center px-2 py-4 border-t-2 border-t-transparent hocus:text-blue-700 border-solid flex">
+        <svg aria-hidden="true" focusable="false" class="h-5 w-5" fill="none" viewbox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16l-4-4m0 0l4-4m-4 4h18"/>
+        </svg>
+        <span class="hidden sm:inline">Précédent</span>
+    </a>
+{% endmacro %}
+
+{% macro next(url, is_disabled = false) %}
+    <a aria-label="Suivant" href="{{ url }}" {{ "inert" if is_disabled else "" }} class="inert:text-gray-500 inert:opacity-30 gap-x-2 items-center px-2 py-4 border-t-2 border-t-transparent hocus:text-blue-700 border-solid flex">
+        <span class="hidden sm:inline">Suivant</span>
+        <svg aria-hidden="true" focusable="false" class="h-5 w-5" fill="none" viewbox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+        </svg>
+    </a>
+{% endmacro %}
+
+{% macro item(paginator, name="") %}
+    {% set before_ellipsis = false %}
+    {% set after_ellipsis = false %}
+    {% set query_params = "&" ~ (paginator.query_params) if paginator.query_params else "" %}
+    {% set nb_items_to_show = 5 if (paginator.page == 1 or paginator.page == paginator.total_pages) else 2 %}
+    <nav class="pagination-tooltip bg-white !hidden" data-pagination-shortcut role="navigation" aria-label="Selection page" id="pagination-shortcut">
+        <p class="px-3 py-3">Aller à la page</p>
+        <hr>
+        <div class="pagination max-h-36 overflow-y-auto p-1">
+            {% for i in range(1, paginator.total_pages + 1) %}
+                {% if i == paginator.page %}
+                    <span class="font-bold block p-4 text-center" aria-hidden="true" aria-current="page">{{ i }}</span>
+                {% else %}
+                    <a class="text-black text-center hocus:text-blue-700 block p-4" aria-hidden="true" href="{{ current_url ~ "?page=" ~ i ~ query_params }}">{{ i }}</a>
+                {% endif %}
+            {% endfor %}
+        </div>
+    </nav>
+    {% if paginator.total_pages > 1 %}
+        <div class="flex gap-3 items-center flex-col @3xl/main:flex-row z-10">
+            <label for="select-page" class="hidden @3xl/main:block">Aller à la page :</label>
+            <select id="select-page" data-paginator="{{ name }}">
+                {% for i in range(1, paginator.total_pages + 1) %}
+                    <option {{ "selected" if i == paginator.page else "" }} value="{{ i }}">{{ 'Page ' ~ i }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <nav class="flex justify-between px-4 absolute @3xl/main:static inset-0" role="navigation" aria-label="Pagination">
+            {{ previous("?page=" ~ (paginator.page - 1) ~ query_params, paginator.page <= 1) }}
+            <ul class="flex">
+                {% for i in range(1, paginator.total_pages + 1) %}
+                    {% if i <= 1 or i == paginator.total_pages or (i - paginator.page)|abs <= nb_items_to_show %}
+                        <li class="hidden @3xl/main:[display:revert]">
+                            {% if i == paginator.page %}
+                                <span class="page-active font-bold block p-4 border-transparent border-t-2 border-solid" aria-current="page">{{ i }}</span>
+                            {% else %}
+                                <a class="border-t-transparent hocus:border-t-blue-200 hocus:text-blue-700 block p-4 border-t-2 border-solid" href="{{ current_url ~ "?page=" ~ i ~ query_params }}">
+                                    <span class="sr-only">Aller à la page</span> {{ i }}
+                                </a>
+                            {% endif %}
+                        </li>
+                    {% elseif before_ellipsis == false and i < paginator.page - nb_items_to_show %}
+                        <li class="hidden @3xl/main:[display:revert]">
+                            <button type="button" aria-hidden="true" data-toggle-pagination-shortcut-btn class="hidden font-bold p-4 text-gray-500 supports-[position-area]:block hocus:text-blue-700 w-11">…</button>
+                            <span class="block p-4 text-gray-500 supports-[position-area]:hidden">…</span>
+                        </li>
+                        {% set before_ellipsis = true %}
+                    {% elseif after_ellipsis == false and i > paginator.page + nb_items_to_show %}
+                        <li class="hidden @3xl/main:[display:revert]">
+                            <button type="button" aria-hidden="true" data-toggle-pagination-shortcut-btn class="hidden font-bold p-4 text-gray-500 supports-[position-area]:block hocus:text-blue-700 w-11">…</button>
+                            <span class="block p-4 text-gray-500 supports-[position-area]:hidden">…</span>
+                        </li>
+                        {% set after_ellipsis = true %}
+                    {% endif %}
+                {% endfor %}
+            </ul>
+            {{ next("?page=" ~ (paginator.page + 1) ~ query_params, paginator.page >= paginator.total_pages) }}
+        </nav>
+    {% endif %}
+{% endmacro %}

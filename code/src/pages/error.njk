@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" class="dark:bg-gray-800 dark:text-white text-slate-800">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+        <title>Error {{ statusCode }} - Something went wrong</title>
+
+        <link rel="stylesheet" href="/styles/reset.css">
+        <link rel="stylesheet" href="/styles/fonts.css">
+
+        <meta name="theme-color" content="rgb(185 28 28)"/>
+
+        <link rel="icon" href="/images/error-favicon.svg">
+
+        {% if NODE_ENV == "development" %}
+            <script type="module" src="/src/scripts/main.debug.js" defer></script>
+        {% endif %}
+    </head>
+    <body>
+        {% include "components/profiler.njk" %}
+        <header class="bg-red-700 text-white text-xl mb-2">
+            <h1 class="pr-[max(env(safe-area-inset-right),_theme(space.6))] pl-[max(env(safe-area-inset-left),_theme(space.6))] py-3 m-auto max-w-7xl">Error {{ statusCode }} - Something went wrong</h1>
+        </header>
+        <div class="m-auto max-w-7xl pr-[max(env(safe-area-inset-right),_theme(space.6))] pl-[max(env(safe-area-inset-left),_theme(space.6))]">
+            <p class="text-lg mb-4">{{ error.message }}</p>
+            {% if sourceCode %}
+                <div class="dark:bg-slate-900 bg-yellow-50 rounded-md border-2 border-solid border-red-700">
+                    <header class="bg-red-700 p-2 flex justify-between items-center text-white">
+                        <b>{{ fileType }}</b>
+                        <button class="py-1 px-3 hocus:bg-red-900 hocus:text-white rounded" data-file="{{ "open_editor" | routeName({ file: details.file_path, line: details.line, column: details.column })}}">Open file</button>
+                    </header>
+                    <div class="p-3">
+                        <code class="whitespace-break-spaces">{{ sourceCode }}</code>
+                    </div>
+                </div>
+            {% endif %}
+            <footer class="mt-4">
+                <ul class="flex justify-center gap-4">
+                    <li>
+                        <a href="/" class="underline hocus:no-underline">Retourner à l'accueil</a>
+                    </li>
+                    <li>
+                        <a href="/admin" class="underline hocus:no-underline">Retourner à l'admin</a>
+                    </li>
+                </ul>
+            </footer>
+        </div>
+    </body>
+</html>

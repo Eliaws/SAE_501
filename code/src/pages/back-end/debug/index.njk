@@ -1,0 +1,61 @@
+{% extends "layouts/back-end/base.njk" %}
+
+{% set active_menu_item = "debug" %}
+
+{% block head_tags %}
+    <link rel="icon" href="/images/wrench-screwdiver-favicon.svg">
+{% endblock %}
+
+{% set menu_entries = [
+    {
+        link: "debug_router" | routeName,
+        name: "Liste des routes",
+        icon: "/images/server-icon.svg"
+    },
+    {
+        link: "swagger" | routeName,
+        name: "Swagger",
+        icon: "/images/code-icon.svg"
+    },
+    {
+        link: "eslint" | routeName,
+        name: "eslint",
+        icon: "/images/code-icon.svg"
+    }
+] %}
+
+{% block title %}Debug{% endblock %}
+
+{% block main %}
+    <div class="bg-white rounded-2xl shadow-md pb-6">
+        <header class="mb-1 p-6 pr-4 pl-8 flex justify-between gap-2 lg:flex-row flex-col">
+            <h2 class="text-4xl">
+                Debug
+                <span class="block text-sm">Accessible uniquement en mode "développement"</span>
+            </h2>
+        </header>
+        <ul class="
+            px-6 grid grid-cols-1
+            @xl/main:grid-cols-2
+            @6xl/main:grid-cols-3
+            gap-4
+        ">
+            {% for item in menu_entries | sort(false, false, 'name') %}        
+                <li class="border-t-2 aspect-auto">
+                    <a 
+                        href="{{ item.link }}" 
+                        class="
+                            flex w-full h-full items-center 
+                            px-2 py-3 rounded-lg gap-3 text-base hocus:bg-blue-100
+                        "
+                    >
+                        <div class="w-13">
+                            <img src="{{ item.icon if item.icon else "/images/wrench-screwdiver-icon.svg" }}" alt="" >
+                        </div>
+                        <p class="text-center">{{ item.name }}</p>
+                    </a>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endblock %}

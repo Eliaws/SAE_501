@@ -1,0 +1,226 @@
+body:has(dialog:modal) {
+    overflow: hidden;
+}
+
+@container main (width <= theme('containers.3xl')) {
+    table {
+        border: 0;
+
+        thead {
+            border: none;
+            clip: rect(0 0 0 0);
+            height: 1px;
+            margin: -1px;
+            overflow: hidden;
+            padding: 0;
+            position: absolute;
+            width: 1px;
+        }
+
+        tr {
+            border-bottom: 1px solid theme("colors.slate.200");
+            display: block;
+
+            &:last-child {
+                border-bottom-color: transparent;
+            }
+        }
+
+        td {
+            display: block;
+            text-align: left;
+
+            &::before {
+                content: attr(data-label);
+                font-weight: bold;
+                display: block;
+            }
+        }
+    }
+}
+
+::backdrop {
+    backdrop-filter: blur(5px);
+    background-color: rgba(107, 114, 128, 0.35); /* theme("colors.gray.500"); */
+    pointer-events: fill;
+}
+
+/* Source : https://dev.to/chokcoco/fantastic-css-border-animation-5166 */
+.animated-border {
+    --distance: 15px;
+    --animation-speed: 2.25s;
+    position: relative;
+
+    &::before,
+    &::after {
+        content: "";
+        position: absolute;
+        border: theme("borderWidth.2") dashed #fff;
+        background: linear-gradient(#fff 0 0) padding-box,
+            linear-gradient(
+                to bottom,
+                theme("colors.sky.700"),
+                theme("colors.blue.700")
+            );
+        animation: clippath var(--animation-speed) infinite ease-in;
+        border-radius: theme("borderRadius.lg");
+        inset: 0;
+        z-index: 0;
+    }
+
+    &::after {
+        animation: clippath var(--animation-speed) infinite
+            calc(var(--animation-speed) * -0.5) linear;
+    }
+
+    &.paused {
+        &::before,
+        &::after {
+            animation-name: none;
+        }
+    }
+}
+
+:root {
+    --percentage: 98%;
+}
+
+@keyframes clippath {
+    0%,
+    100% {
+        clip-path: inset(0 0 var(--percentage) 0);
+    }
+    25% {
+        clip-path: inset(0 var(--percentage) 0 0);
+    }
+    50% {
+        clip-path: inset(var(--percentage) 0 0 0);
+    }
+    75% {
+        clip-path: inset(0 0 0 var(--percentage));
+    }
+}
+
+dialog {
+    &[open] {
+        animation: slide-in-up 0.1s cubic-bezier(0.25, 0, 0.3, 1) both;
+    }
+}
+
+@keyframes slide-in-up {
+    0% {
+        transform: translateY(100%);
+    }
+    100% {
+        transform: translateY(0%);
+    }
+}
+
+.eslint-report-summary {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+
+    @container main (width <= theme('containers.3xl')) {
+        grid-template-columns: none;
+    }
+}
+
+.eslint-report-problems {
+    grid-column: 1 / span 2;
+    @container main (width <= theme('containers.3xl')) {
+        grid-column: auto / auto;
+    }
+}
+
+details summary::-webkit-details-marker {
+    display: none;
+}
+
+.page-active {
+    position: relative;
+
+    &::before {
+        content: "";
+        position: absolute;
+        height: theme("borderWidth.2");
+        border-top: theme("borderWidth.2") theme("borderColor.blue.500") solid;
+        left: 0;
+        top: calc(-1 * theme("borderWidth.2"));
+        right: 0;
+        transform: scaleX(1);
+        transition: transform 0.1s ease-in;
+
+        @starting-style {
+            transform: scaleX(0);
+        }
+    }
+}
+
+.pagination-tooltip {
+    position: fixed;
+    position-anchor: --paginationShortcutAnchor;
+    position-area: top;
+    margin: 0 0 5px 0;
+    position-try-fallbacks: --compact-target, flip-block;
+
+    border: theme("borderWidth.DEFAULT") theme("colors.gray.200") solid;
+    border-radius: theme("borderRadius.2xl");
+    z-index: 99;
+
+    transform: scale(1);
+    opacity: 1;
+    transform-origin: center bottom;
+    transition-property: transform, opacity;
+    transition-timing-function: ease-in;
+    transition-duration: 0.25s, 0.3s;
+
+    @starting-style {
+        transform: scale(0);
+        opacity: 0.25;
+    }
+
+    &.fade-out {
+        transform: scale(0);
+        opacity: 0.25;
+    }
+
+    .pagination {
+        display: grid;
+        grid-template-columns: repeat(6, auto);
+    }
+}
+
+@position-try --compact-target {
+    grid-template-columns: repeat(10, auto);
+}
+
+@supports not (position-area: top) {
+    .pagination-tooltip,
+    .tooltip {
+        display: none;
+    }
+}
+
+.tooltip {
+    position: fixed;
+    position-area: top;
+    margin: 0 0 5px 0;
+    position-try-fallbacks: flip-block;
+
+    transform: scale(1);
+    opacity: 1;
+    transform-origin: center bottom;
+    transition-property: transform, opacity;
+    transition-timing-function: ease-in;
+    transition-duration: 0.25s, 0.3s;
+
+    @starting-style {
+        transform: scale(0);
+        opacity: 0.25;
+    }
+
+    &.fade-out {
+        transform: scale(0);
+        opacity: 0.25;
+    }
+}

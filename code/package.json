@@ -1,0 +1,67 @@
+{
+  "name": "sae-501",
+  "private": true,
+  "version": "2024.0.0",
+  "type": "module",
+  "scripts": {
+    "start": "cross-env NODE_ENV=development node --watch-path=./database --watch-path=./server --watch-path=./env server/index.js",
+    "prod": "cross-env NODE_ENV=production node server/index.js",
+    "build": "node ./vite.config.build.js",
+    "lint": "npx eslint",
+    "lint:fix": "npx eslint --fix"
+  },
+  "devDependencies": {
+    "@babel/code-frame": "^7.26.2",
+    "@eslint/js": "^9.13.0",
+    "@stylistic/eslint-plugin": "^2.10.1",
+    "@tailwindcss/container-queries": "^0.1.1",
+    "@tailwindcss/forms": "^0.5.9",
+    "@vituum/vite-plugin-tailwindcss": "^1.2.0",
+    "autoprefixer": "^10.4.20",
+    "eslint": "^9.14.0",
+    "globals": "^15.12.0",
+    "launch-editor": "^2.9.1",
+    "postcss": "^8.4.48",
+    "sass": "^1.80.6",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.1",
+    "tailwindcss": "^3.4.14",
+    "vite": "^5.4.11"
+  },
+  "dependencies": {
+    "axios": "^1.7.7",
+    "cookie-parser": "^1.4.7",
+    "cookie-session": "^2.1.0",
+    "cors": "^2.8.5",
+    "cross-env": "^7.0.3",
+    "dotenv": "^16.4.5",
+    "express": "^4.21.1",
+    "express-flash": "^0.0.2",
+    "express-rate-limit": "^7.4.1",
+    "fast-glob": "^3.3.2",
+    "helmet": "^8.0.0",
+    "ip": "^2.0.1",
+    "lodash": "^4.17.21",
+    "luxon": "^3.5.0",
+    "mime": "^4.0.4",
+    "mongoose": "^8.8.1",
+    "multer": "^1.4.5-lts.1",
+    "nunjucks": "^3.2.4",
+    "on-headers": "^1.0.2",
+    "slugify": "^1.6.6",
+    "validator": "^13.12.0"
+  },
+  "imports": {
+    "#models/*.js": "./database/models/*.js",
+    "#database/index.js": "./database/index.js",
+    "#server/utils/*.js": "./server/utils/*.js",
+    "#server/*.js": "./server/*.js",
+    "#database/validator.js": "./database/validator.js",
+    "#database/*.js": "./database/*.js",
+    "#fe/utils": "./src/scripts/utils.js",
+    "#generate-list-routes.js": "./generate-list-routes.js"
+  },
+  "engines": {
+    "node": ">=18.11"
+  }
+}

@@ -1,0 +1,46 @@
+{% set bubble_color = "rouge" %}
+
+<!DOCTYPE html>
+<html lang="fr" class="bg-neutral-50 text-slate-900">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+        <meta name="theme-color" content="#ffffff"/>
+        
+        <title>
+            {% block title %}TITRE MANQUANT !{% endblock %} - SAÉ 501
+        </title>
+
+        <link rel="stylesheet" href="/styles/reset.css">
+        <link rel="stylesheet" href="/styles/fonts.css">
+        {% if NODE_ENV != "development" %}
+            <link rel="stylesheet" href="/{{ manifest['style.css'].file }}"/>
+        {% endif %}
+
+        {% block head_tags %}
+            <meta 
+                name="description" 
+                content="Bienvenue sur le site de présentation du Bachelor Universitaire de Technologie spécialité Métiers du Multimédia et de l'Internet, appellé également MMI."
+            >
+        {% endblock %}
+
+        {% block styles %}{% endblock %}
+        {% block javascript %}{% endblock %}
+
+        {% if NODE_ENV == "development" %}
+            <script type="module" src="/src/scripts/main.frontend.js" defer></script>
+        {% else %}
+            <script type="module" src="/{{ manifest['src/scripts/main.frontend.js'].file }}" defer></script>
+        {% endif %}
+    </head>
+    <body class="mr-[max(env(safe-area-inset-right),_theme(space.4))] ml-[max(env(safe-area-inset-left),_theme(space.4))]">
+        {% include "components/profiler.njk" %}
+        
+        {% include "components/front-end/navigation.njk" %}
+        {% include "components/front-end/hero.njk" %}
+
+        <main class="max-w-[1200px] mx-auto @container/main">
+            {% block main %}{% endblock %}
+        </main>
+    </body>
+</html>

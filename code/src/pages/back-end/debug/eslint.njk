@@ -1,0 +1,37 @@
+{% extends "layouts/back-end/base.njk" %}
+
+{% import "components/back-end/eslint-report.njk" as eslint with context %}
+
+{% set active_menu_item = "debug" %}
+
+{% block head_tags %}
+    <link rel="icon" href="/images/code-icon.svg">
+
+    {% if NODE_ENV == "development" %}
+        <script type="module" src="/src/scripts/main.debug.js" defer></script>
+    {% endif %}
+{% endblock %}
+
+{% block title %}Eslint Report - Debug{% endblock %}
+
+{% block main %}
+    <div class="bg-white rounded-2xl shadow-md pb-6">
+        <header class="mb-1 p-6">
+            {% include "components/back-end/breadcrumb.njk" %}
+            <h2 class="text-4xl">
+                Eslint Report
+                <span class="block text-sm">Page accessible uniquement en mode "développement"</span>
+            </h2>
+        </header>
+        <div class="px-6" lang="en">
+            <nav class="flex gap-2">
+                <button data-tab-name="server" class="px-3 py-2 rounded-md hover:bg-slate-300">Server ({{ eslint_report.server.summary.errorCount + eslint_report.server.summary.warningCount }})</button>
+                <button data-tab-name="front" class="px-3 py-2 rounded-md hover:bg-slate-300">Front-end ({{ eslint_report.frontend.summary.errorCount + eslint_report.frontend.summary.warningCount }})</button>
+            </nav>
+            <section class="list-tab-content pt-3">
+                <div data-tab-content="server">{{ eslint.report(eslint_report.server) }}</div>
+                <div data-tab-content="front">{{ eslint.report(eslint_report.frontend) }}</div>
+            </section>
+        </div>
+    </div>
+{% endblock %}

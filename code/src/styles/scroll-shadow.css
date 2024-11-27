@@ -1,0 +1,73 @@
+/* Source : https://scroll-driven-animations.style/demos/scroll-shadows/css/ */
+
+@supports (animation-timeline: scroll()) {
+    @media (width < theme("screens.md")) {
+        .horizontal-scroll-shadow {
+            position: relative;
+            scroll-timeline: --scroll-timeline x;
+
+            &::before,
+            &::after {
+                font-weight: bold;
+                display: block;
+                position: sticky;
+                top: 0;
+                bottom: 0;
+                font-size: 1.35rem;
+                padding-top: 0.7rem;
+                color: #333333d6;
+
+                animation-timeline: --scroll-timeline;
+                animation-fill-mode: both;
+                animation-timing-function: linear;
+                will-change: transform, opacity;
+            }
+
+            &::before {
+                content: "\00a0❰\00a0";
+                left: 0;
+                background: linear-gradient(
+                    90deg,
+                    rgba(255, 255, 255, 1) 0%,
+                    rgba(240, 240, 240, 0.47) 100%
+                );
+                animation-range: 1em 2em;
+                animation-name: reveal;
+            }
+
+            &::after {
+                content: "\00a0❱\00a0";
+                right: 0;
+                background: linear-gradient(
+                    -90deg,
+                    rgba(255, 255, 255, 1) 0%,
+                    rgba(240, 240, 240, 0.47) 100%
+                );
+                animation-name: reveal-right;
+                animation-direction: reverse;
+                animation-range: calc(100% - 2em) calc(100% - 1em);
+            }
+        }
+        @keyframes reveal {
+            0% {
+                opacity: 0;
+                translate: -100% 0;
+            }
+            100% {
+                opacity: 1;
+                translate: 0 0;
+            }
+        }
+
+        @keyframes reveal-right {
+            0% {
+                opacity: 0;
+                translate: 100% 0;
+            }
+            100% {
+                opacity: 1;
+                translate: 0 0;
+            }
+        }
+    }
+}

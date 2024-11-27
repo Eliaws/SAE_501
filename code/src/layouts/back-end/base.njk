@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="fr" class="bg-neutral-100 text-slate-900 relative">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+        <title>
+            {% block title %}TITRE MANQUANT !
+            {% endblock %}
+            - Administration SAÉ 501</title>
+
+        <meta name="theme-color" content="#bfdbfe"/>
+        <meta name="robots" content="noindex, nofollow">
+
+        <link rel="stylesheet" href="/styles/reset.css">
+        <link rel="stylesheet" href="/styles/fonts.css">
+        {% if NODE_ENV != "development" %}
+            <link rel="stylesheet" href="/{{ manifest['style.css'].file }}"/>
+        {% endif %}
+
+        {% block head_tags %}{% endblock %}
+
+        {% block styles %}{% endblock %}
+        {% block javascript %}{% endblock %}
+
+        {% if NODE_ENV == "development" %}
+            <script type="module" src="/src/scripts/main.backend.js" defer></script>
+        {% else %}
+            <script type="module" src="/{{ manifest['src/scripts/main.backend.js'].file }}" defer></script>
+        {% endif %}
+    </head>
+    <body class="min-h-screen">
+        {% include "components/profiler.njk" %}
+        <div class="absolute w-full min-h-[40vh] z-[-1] bg-gradient-to-b from-blue-200 to-neutral-100"></div>
+        <div class="mr-[max(env(safe-area-inset-right),_theme(space.6))] ml-[max(env(safe-area-inset-left),_theme(space.6))] py-5 flex gap-6 flex-col md:flex-row">
+            {% include "components/back-end/navigation.njk" %}
+            <main class="basis-full @container/main">
+                {% block main %}{% endblock %}
+
+                <footer class="border-y border-gray-400 text-center mx-6 my-3">
+                    <p class="font-bold">SAE 501 - Projet réalisé par : </p> 
+                    <ul class="flex flex-col sm:flex-row justify-center">
+                        <li class="px-1">A compléter</li>
+                        <li class="px-1">A compléter</li>
+                        <li class="px-1">A compléter</li>
+                    </ul>
+                </footer>
+            </main>
+        </div>
+
+        <dialog data-modal class="duration-300 transition-dialog bg-white shadow-xl rounded-lg md:my-8 w-11/12 sm:w-3/4 sm:max-w-2xl"></dialog>
+
+        <template data-tpl-id="preview-image">
+            <button inert data-reduce-image-btn class="cursor-zoom-out opacity-0 pointer-events-none block group" title="Rétrécir image">
+                <img src="" data-image alt="" class="max-h-full max-w-full absolute top-2/4 -translate-y-1/2 left-2/4 -translate-x-2/4 group-focus:outline-4 group-focus:outline-blue-500 group-focus:outline">
+            </button>
+            <div class="min-h-full sm:p-0 shadow-xl duration-300 transition-opacity" data-main-content>
+                <div class="p-4 sm:mt-0">
+                    <h2 class="mb-2 font-semibold leading-6 text-gray-900" data-modal-title>Aperçu</h2>
+                    <div class="flex max-h-96 justify-center" data-container-image>
+                        <button data-enlarge-image-btn class="cursor-zoom-in flex justify-center relative group" title="Voir image en grand">
+                            <span class="absolute z-10 bg-slate-50 px-2 py-0.5 rounded-xl top-3 border border-black border-solid touch:opacity-100 opacity-10 group-hocus:opacity-100 text-xs">Cliquez pour agrandir</span>
+                            <img src="" data-image alt="" class="max-h-full max-w-full">
+                        </button>
+                    </div>
+                </div>
+                <div class="bg-gray-50 p-4">
+                    <div class="grid grid-cols-2 gap-3">
+                        <div class="col-start-1 col-end-3 sm:col-auto">
+                            <p class="text-xs text-gray-600">Nom</p>
+                            <p class="truncate" data-image-name>/</p>
+                        </div>
+                        <div>
+                            <p class="text-xs text-gray-600">Dimensions en pixels</p>
+                            <p data-image-dimensions>950x600</p>
+                        </div>
+                        <div>
+                            <p class="text-xs text-gray-600">Taille</p>
+                            <p data-image-size>950x600</p>
+                        </div>
+                        <div>
+                            <p class="text-xs text-gray-600">Type</p>
+                            <p data-image-mime>image/jpeg</p>
+                        </div>
+                    </div>
+                    <div class="sm:flex sm:flex-row mt-4 gap-3 justify-end">
+                        <button type="button" class="disabled:opacity-50 mt-3 items-center inline-flex w-full justify-center rounded-2xl px-4 py-2 text-sm font-semibold shadow-sm sm:mt-0 sm:w-auto bg-blue-700 hocus:bg-blue-950 text-white" data-close-modal autofocus>Fermer</button>
+                    </div>
+                </div>
+            </div>
+        </template>
+
+        <template data-tpl-id="delete-image">
+            <div class="flex min-h-full items-center justify-center text-center sm:items-center sm:p-0 shadow-xl">
+                <div class="bg-white text-left w-full">
+                    <div class="p-4 sm:mt-0 text-left">
+                        <h2 class="mb-2 font-semibold leading-6 text-gray-900">Suppression</h2>
+                        <p>Souhaitez-vous supprimer l'image suivante ?</p>
+                        <p class="text-sm font-bold text-red-700" role="alert">Cette action est irréversible</p>
+                        <div class="flex justify-center my-3 max-h-96">
+                            <img src="" data-image alt="" class="object-contain">
+                        </div>
+                    </div>
+                    <div class="bg-gray-50 p-4 sm:flex sm:flex-row gap-3 justify-end">
+                        <button type="button" class="disabled:opacity-50 inline-flex w-full justify-center gap-1 items-center rounded-2xl bg-red-600 px-4 py-2 text-sm font-semibold text-white shadow-sm hocus:bg-red-800 sm:w-auto" data-delete-item>
+                            {% include "components/icons/delete-icon.njk" %}
+                            Supprimer
+                        </button>
+                        <button type="button" class="disabled:opacity-50 mt-3 items-center inline-flex w-full justify-center rounded-2xl bg-white px-4 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hocus:bg-gray-100 sm:mt-0 sm:w-auto" data-close-modal autofocus>Annuler</button>
+                    </div>
+                </div>
+            </div>
+        </template>
+
+        <template data-tpl-id="breadcrumb-details">
+            <div class="flex min-h-full items-center justify-center text-center sm:items-center sm:p-0 shadow-xl">
+                <div class="bg-white text-left w-full">
+                    <div class="p-4 sm:mt-0 text-left">
+                        <h2 class="mb-2 font-semibold leading-6 text-gray-900">Fil d'ariane</h2>
+                        <ol data-content-list class="list-disc list-inside"></ol>
+                    </div>
+                    <div class="bg-gray-50 p-4 sm:flex sm:flex-row gap-3 justify-end">
+                        <button type="button" class="disabled:opacity-50 mt-3 items-center inline-flex w-full justify-center rounded-2xl px-4 py-2 text-sm font-semibold shadow-sm sm:mt-0 sm:w-auto bg-blue-700 hocus:bg-blue-950 text-white" data-close-modal autofocus>Fermer</button>
+                    </div>
+                </div>
+            </div>
+        </template>
+
+        <template data-tpl-id="delete-entry">
+            <div class="flex min-h-full items-center justify-center text-center sm:items-center sm:p-0 shadow-xl">
+                <div class="bg-white text-left w-full">
+                    <div class="p-4 sm:mt-0 text-left">
+                        <p data-error-modal class="hidden rounded-lg p-4 bg-red-100 text-red-800 border-solid border-x border-y border-red-700 mb-3"></p>
+                        <h2 class="mb-2 font-semibold leading-6 text-gray-900">Suppression</h2>
+                        <p>Souhaitez-vous supprimer "<span data-modal-item-name class="bg-indigo-100"></span>" ?</p>
+                        <p class="text-sm font-bold text-red-700" role="alert">Cette action est irréversible</p>
+                    </div>
+                    <div class="bg-gray-50 p-4 sm:flex sm:flex-row gap-3 justify-end">
+                        <button type="button" class="disabled:opacity-50 inline-flex w-full justify-center gap-1 items-center rounded-2xl bg-red-600 hocus:bg-red-800 px-4 py-2 text-sm font-semibold text-white shadow-sm sm:w-auto" data-delete-item>
+                            {% include "components/icons/delete-icon.njk" %}
+                            Supprimer
+                        </button>
+                        <button type="button" class="disabled:opacity-50 mt-3 inline-flex w-full justify-center rounded-2xl bg-white px-4 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hocus:bg-gray-100 sm:mt-0 sm:w-auto items-center" data-close-modal autofocus>Annuler</button>
+                    </div>
+                </div>
+            </div>
+        </template>
+
+        <template data-tpl-id="breadcrumb-item">
+            <li class="px-2 py-2 focus-within:bg-blue-100 hover:bg-blue-100 rounded-lg inert:opacity-40">
+                <a href="" class="text-base"></a>
+            </li>
+        </template>
+    </body>
+</html>

@@ -1,0 +1,119 @@
+{% extends "layouts/back-end/base.njk" %}
+
+{% set active_menu_item = "debug" %}
+
+{% block head_tags %}
+    <link rel="icon" href="/images/wrench-screwdiver-favicon.svg">
+
+    <script type="module" src="/src/scripts/main.debug.js" defer></script>
+{% endblock %}
+
+{% set filter_entries = [
+    {
+        class: "bg-slate-50 text-slate-900 outline-slate-900 hover:bg-slate-100",
+        class_active: "bg-slate-900 text-slate-300 hover:bg-slate-950 outline-transparent",
+        name: "ALL"
+    },
+    {
+        class: "bg-green-50 text-green-900 outline-green-900 hover:bg-green-100",
+        class_active: "bg-green-900 text-green-300 hover:bg-green-950 outline-transparent",
+        name: "GET"
+    },
+    {
+        class: "bg-blue-50 text-blue-900 outline-blue-900 hover:bg-blue-100",
+        class_active: "bg-blue-900 text-blue-300 hover:bg-blue-950 outline-transparent",
+        name: "POST"
+    },
+    {
+        class: "bg-yellow-50 text-yellow-900 outline-yellow-900 hover:bg-yellow-100",
+        class_active: "bg-yellow-900 text-yellow-300 hover:bg-yellow-950 outline-transparent",
+        name: "PUT"
+    }, 
+    {
+        class: "bg-red-50 text-red-900 outline-red-900 hover:bg-red-100",
+        class_active: "bg-red-900 text-red-300 hover:bg-red-950 outline-transparent",
+        name: "DELETE"
+    }
+] %}
+
+{% set qsp_method = query_string_params.method if query_string_params.method else 
+    "ALL" %}
+{% block title %}List routes ({{ qsp_method }}) - {{ list_routes | length }} routes found - SAE-501{% endblock %}
+
+{% block main %}
+    <div class="bg-white rounded-2xl shadow-md pb-6" lang="en">
+        <header class="mb-1 p-6 pr-4 pl-6 flex justify-between gap-2 flex-col">
+            {% include "components/back-end/breadcrumb.njk" %}
+            <h2 class="text-4xl">
+                List routes
+                <span class="block text-sm">{{ list_routes | length }} routes found</span>
+            </h2>
+
+            <hr class="my-5">
+            <ul class="flex gap-3 flex-wrap">
+                {% for item in filter_entries %}
+                    {% if item.name in list_methods or item.name == "ALL" %}
+                        <li class="rounded outline-2 outline {{ item.class_active if qsp_method == item.name else item.class }} relative">
+                            <a 
+                                href="?method={{ item.name }}" 
+                                class="block px-2.5 py-0.5"
+                            >
+                                {{ item.name }}
+                            </a>
+                        </li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+        </header>
+        <search title="routes">
+            <form class="flex flex-col pt-0 mb-6 pr-6 pl-6" autocomplete="off">
+                <label for="route">Search by route's name</label>
+                <input class="text-black rounded" type="search" name="route_name" value="{{ query_string_params.route_name }}" id="route" placeholder="Route's name" data-route-search>
+            </form>
+        </search>
+
+        <table class="w-full bg-white rounded-lg overflow-hidden border-collapse" data-table-routes>
+            <thead>
+                <tr>
+                    <th class="bg-white top-0 @3xl/main:sticky font-bold px-6 text-left border-solid border-slate-200 border-b py-3 @3xl/main:w-48">Method</th>
+                    <th class="bg-white top-0 @3xl/main:sticky font-bold px-6 text-left border-solid border-slate-200 border-b py-3">Name</th>
+                    <th class="bg-white top-0 @3xl/main:sticky font-bold px-6 text-left border-solid border-slate-200 border-b py-3">Path</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in list_routes %}
+                    <tr>
+                        <td class="bg-transparent border-solid border-slate-200 border-b py-4 px-6 @3xl/main:w-48" data-label="METHOD">
+                            {% if item.METHOD == "GET" %}
+                                <span class="me-2 px-2.5 py-0.5 rounded bg-green-900 text-green-300">{{ item.METHOD }}</span>
+                            {% elif item.METHOD == "POST" %}
+                                <span class=" me-2 px-2.5 py-0.5 rounded bg-blue-900 text-blue-300">
+                                    {{ item.METHOD }}
+                                </span>
+                            {% elif item.METHOD == "DELETE" %}
+                                <span class="me-2 px-2.5 py-0.5 rounded bg-red-900 text-red-300">{{ item.METHOD }}</span>
+                            {% elif item.METHOD == "ANY" %}
+                                <span class="me-2 px-2.5 py-0.5 rounded bg-slate-900 text-slate-300">{{ item.METHOD }}</span>
+                            {% else %}
+                                <span class="me-2 px-2.5 py-0.5 rounded bg-yellow-900 text-yellow-300">{{ item.METHOD }}</span>
+                            {% endif %}
+                        </td>
+                        <td class="py-4 px-6 bg-transparent border-solid border-slate-200 border-b shadow-transparent" data-label="NAME">
+                            {{ item.NAME }}
+                        </td>
+                        <td class="py-4 px-6 bg-transparent border-solid border-slate-200 border-b shadow-transparent" data-label="PATH">
+                            {{ item.PATH }}
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="3" class="text-center bg-transparent border-solid border-slate-200 border-b py-4 px-6">There's no routes for now</td>
+                    </tr>
+                {% endfor %}
+                <tr class="hidden" data-no-result-row>
+                    <td colspan="3" class="text-center bg-transparent border-solid border-slate-200 border-b border-t py-4 px-6">No route found</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

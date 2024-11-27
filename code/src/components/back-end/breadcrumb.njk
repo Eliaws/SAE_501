@@ -1,0 +1,33 @@
+<nav role="navigation" class="@container/breadcrumb" aria-label="Fil d'ariane" data-id="navigation">
+    {% set has_shown_ellipsis = false %}
+    <ol class="flex gap-1 items-center overflow-hidden">
+        {% for breadcrumb_item in breadcrumb %}
+            {% set display_entry = loop.index0 == 0 or loop.index0 == 1 or loop.index0 == loop.length - 1 or loop.index0 == loop.length - 2 %}
+            <li class="{{ "inline-flex" if display_entry else "hidden @xl/breadcrumb:inline-flex" }} items-center inert:opacity-40 text-gray-400 {{ "min-w-0" if loop.last else "" }}" {{ "inert" if loop.last else "" }}>
+                <a 
+                    class="px-2 py-1 rounded-md hocus:bg-gray-200 hocus:text-gray-900 text-sm {{ "truncate overflow-hidden" if loop.last else "" }}" href="/{{ breadcrumb_item }}"
+                >
+                    {{ breadcrumb_item.split('/') | last | capitalize }}
+                </a>
+            </li>
+            {% if loop.length > 4 and has_shown_ellipsis == false and loop.index0 > 1 %}
+                <li class="inline-flex @xl/breadcrumb:hidden items-center text-gray-400 {{ "min-w-0" if loop.last else "" }}">
+                    <button type="button" class="font-bold p-4 text-gray-500 hocus:text-blue-700 w-11" data-display-details-breadcrumb="{{ breadcrumb }}">…</button>
+                </li>
+                <li inert class="inline-flex @xl/breadcrumb:hidden shrink-0 text-gray-400 last:hidden size-3 items-center justify-center">
+                    <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+                        <path d="M18.44 10.566l-.679-.714c-.011-.013-.028-.017-.044-.03L8.951.591a1.848 1.848 0 00-2.711 0l-.68.712a2.096 2.096 0 000 2.854l7.45 7.843-7.45 7.84a2.098 2.098 0 000 2.857l.68.71c.747.79 1.961.79 2.71 0l8.767-9.227c.014-.014.033-.018.044-.033l.68-.712c.375-.396.56-.916.559-1.435a2.065 2.065 0 00-.56-1.435z"></path>
+                    </svg>
+                </li>
+                {% set has_shown_ellipsis = true %}
+            {% endif %}
+            {% if loop.last == false %}
+                <li inert class="{{ "inline-flex" if display_entry else "hidden @xl/breadcrumb:inline-flex" }} shrink-0 text-gray-400 last:hidden size-3 items-center justify-center">
+                    <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+                        <path d="M18.44 10.566l-.679-.714c-.011-.013-.028-.017-.044-.03L8.951.591a1.848 1.848 0 00-2.711 0l-.68.712a2.096 2.096 0 000 2.854l7.45 7.843-7.45 7.84a2.098 2.098 0 000 2.857l.68.71c.747.79 1.961.79 2.71 0l8.767-9.227c.014-.014.033-.018.044-.033l.68-.712c.375-.396.56-.916.559-1.435a2.065 2.065 0 00-.56-1.435z"></path>
+                    </svg>
+                </li>
+            {% endif %}
+        {% endfor %}
+    </ol>
+</nav>

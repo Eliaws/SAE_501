@@ -1,0 +1,31 @@
+{% extends "layouts/back-end/base.njk" %}
+
+{% import "components/back-end/eslint-report.njk" as eslint with context %}
+
+{% set active_menu_item = "debug" %}
+
+{% block head_tags %}
+    <link rel="icon" href="/images/code-icon.svg">
+
+    {% if NODE_ENV == "development" %}
+        <script type="module" src="/src/scripts/main.debug.js" defer></script>
+    {% endif %}
+{% endblock %}
+
+{% block title %}Swagger - Debug{% endblock %}
+
+{% block main %}
+    <iframe id="idIframe" class="w-full rounded-2xl min-h-screen" src="/swagger/" frameborder="0"></iframe>
+
+    <script type="application/javascript">
+        const resizeIFrameToFitContent = (iFrame) => {            
+            iFrame.style.height = `${iFrame.contentWindow.document.documentElement.scrollHeight}px`;
+        }
+
+        document.querySelectorAll("iframe").forEach((item) => {
+            setTimeout(() => {
+                resizeIFrameToFitContent(item);
+            }, 2100);
+        });
+    </script>
+{% endblock %}

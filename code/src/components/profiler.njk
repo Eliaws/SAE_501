@@ -1,0 +1,102 @@
+{% if NODE_ENV == "development" %}
+    <style>
+        .profiler-bar {
+            transition-property: translate;
+            transition-timing-function: ease-in;
+            transition-duration: 0.25s;
+
+            &.hide {
+                translate: 0 200%;
+            }
+        }
+
+        .btn-open-profiler-bar {
+            scale: 0;
+            transition-property: scale;
+            transition-timing-function: ease-in;
+            transition-duration: 0.1s;
+            transition-delay: 0.02s;
+
+            &.show {
+                scale: 1;
+            }
+        }
+    </style>
+    <div class="fixed lg:left-1/2 lg:-translate-x-1/2 left-[max(env(safe-area-inset-right),_theme(space.6))] bottom-6 z-50 touch:hidden" lang="en">
+        <button data-profiler-bar-open-btn class="btn-open-profiler-bar rounded-full bg-blue-700 hocus:bg-blue-800 opacity-20 hocus:opacity-100 p-3 text-gray-100 border-2 border-gray-100 border-solid">
+            {% set nbProblems = profiler.eslint_report.warningCount + profiler.eslint_report.errorCount %}
+            {% if nbProblems > 0 %}
+                <span class="inline-flex justify-center items-center z-20 h-5 min-w-5 w-fit p-1 rounded-full absolute -top-1 right-1 translate-x-1/2 bg-red-500">
+                    <span title="{{ nbProblems }} eslint problems found" class="text-sm text-white">{{ nbProblems }}</span>
+                </span>
+            {% endif %}
+            <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                <path stroke-linecap="round" stroke-linejoin="round" d="m6.75 7.5 3 2.25-3 2.25m4.5 0h3m-9 8.25h13.5A2.25 2.25 0 0 0 21 18V6a2.25 2.25 0 0 0-2.25-2.25H5.25A2.25 2.25 0 0 0 3 6v12a2.25 2.25 0 0 0 2.25 2.25Z" />
+            </svg>
+        </button>
+    </div>
+    {% if profiler.has_env_file == false %}
+        {% set warning_env_margins = "" if is_admin else "-mr-[max(env(safe-area-inset-right),_theme(space.4))] -ml-[max(env(safe-area-inset-left),_theme(space.4))]" %}
+        <div lang="en" class="relative py-2 px-8 bg-yellow-800 text-gray-100 {{ warning_env_margins }}" aria-hidden="true">
+            <p class="font-bold">Missing env file</p>
+            <p>You are using default env vars. Please copy and rename ./env/.env.dev.dist file into ./env/.env.dev.local.</p>
+            <svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-20 absolute right-0 top-1/2 -translate-y-1/2 opacity-10">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126ZM12 15.75h.007v.008H12v-.008Z"/>
+            </svg>
+        </div>
+    {% endif %}
+    {% set border_classes = "border-solid border-t lg:border-l lg:border-t-0 dark:lg:border-l-gray-300 border-l-gray-500" %}
+    <div lang="en" data-profiler-bar tabindex="-1" class="profiler-bar overflow-hidden w-fit lg:left-1/2 lg:-translate-x-1/2 left-[max(env(safe-area-inset-right),_theme(space.6))] bottom-6 z-50 fixed flex flex-col lg:flex-row justify-between bg-gray-100 border border-gray-300 border-solid rounded-lg shadow-sm dark:bg-gray-700 dark:border-gray-600 touch:hidden text-gray-600 dark:text-gray-300">
+        <div class="py-2 px-4 bg-green-700 text-gray-200">
+            <p class="text-xs font-bold">HTTP status</p>
+            <p class="text-lg">
+                {{ profiler.status_code }}
+            </p>
+        </div>
+        <div class="py-2 px-4 {{ border_classes }}">
+            <p class="text-xs font-bold">Current route</p>
+            <p class="text-lg">
+                {% if profiler.current_route %}
+                @{{ profiler.current_route }}
+                {% else %}
+                <span class="opacity-25">/</span>
+                {% endif %}
+            </p>
+            <a href="{{ "debug_router" | routeName }}" target="_blank" class="flex gap-1 justify-center items-center text-center px-5 py-2 text-xs text-white bg-blue-700 rounded-lg hocus:bg-blue-800 focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hocus:bg-blue-700 dark:focus:ring-blue-800">
+                See&nbsp;all&nbsp;routes
+                <span>
+                    <svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 0 0 3 8.25v10.5A2.25 2.25 0 0 0 5.25 21h10.5A2.25 2.25 0 0 0 18 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25"></path>
+                    </svg>
+                </span>
+            </a>
+        </div>
+        <div class="py-2 px-4 {{ border_classes }}">
+            <p class="text-xs font-bold">Response time</p>
+            <p class="text-lg">
+                {{ response_time | formatNumber }}&nbsp;ms
+            </p>
+        </div>
+        {% if "errorCount" in profiler.eslint_report %}
+            <div class="py-2 px-4 {{ border_classes }} flex flex-col gap-1">
+                <p class="text-xs font-bold">Eslint</p>
+                <p class="text-lg font-normal -mt-1">{{ profiler.eslint_report.errorCount }}&nbsp;error(s), {{ profiler.eslint_report.warningCount }}&nbsp;warning(s)</p>
+                <a href="{{ "eslint" | routeName }}" target="_blank" class="flex gap-1 justify-center items-center text-center px-5 py-2 text-xs text-white bg-blue-700 rounded-lg hocus:bg-blue-800 focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hocus:bg-blue-700 dark:focus:ring-blue-800">
+                    See&nbsp;details
+                    <span>
+                        <svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 0 0 3 8.25v10.5A2.25 2.25 0 0 0 5.25 21h10.5A2.25 2.25 0 0 0 18 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25"></path>
+                        </svg>
+                    </span>
+                </a>
+            </div>
+        {% endif %}
+        <div class="-order-1 lg:order-none ml-auto">
+            <button data-profiler-bar-close-btn type="button" class="flex-shrink-0 inline-flex justify-center w-7 h-7 items-center rounded-lg text-sm m-1.5 p-1.5 hocus:bg-gray-600 hocus:text-white">
+                <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                </svg>
+            </button>
+        </div>
+    </div>
+{% endif %}

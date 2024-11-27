@@ -1,0 +1,71 @@
+{% set menu_entries = [
+    {
+        link: admin_url ~ "/articles",
+        name: "Articles",
+        key: "articles"
+    },
+    {
+        link: admin_url ~ "/saes",
+        name: "SAÉS",
+        key: "saes"
+    },
+    {
+        link: admin_url ~ "/messages",
+        name: "Messages",
+        key: "messages"
+    },
+    {
+        link: admin_url ~ "/auteurs",
+        name: "Auteurs",
+        key: "authors"
+    },
+    {
+        link: admin_url ~ "/divers",
+        name: "Divers",
+        key: "divers"
+    },
+    {
+        link: base_url,
+        name: "Accéder au site",
+        key: "site"
+    }
+] %}
+
+{% if NODE_ENV == "development" %}
+     {% set menu_entries = (menu_entries.push(
+        {
+            link: base_url ~ "/debug",
+            name: "Debug",
+            key: "debug"
+        }
+    ), menu_entries) %}
+{% endif %}
+
+<nav class="self-start w-full bg-white rounded-2xl flex-initial shadow-md static xl:sticky md:portrait:sticky md:top-5 basis-[min-content]" role="navigation" aria-label="Menu principal">
+    <header>
+        <h1 class="text-center mx-8 md:text-left md:mr-[6.5rem] md:ml-5 pt-6 pb-4 text-xl">
+            <a href="{{ admin_url }}" class="font-bold bg-gradient-to-b from-blue-900 to-slate-900 bg-clip-text text-transparent hocus:from-blue-600 hocus:to-slate-600">
+                Administration SAÉ 501
+            </a>
+        </h1>
+    </header>
+    <hr class="h-px">
+    <ul data-navigation="back-end" class="horizontal-scroll-shadow flex md:flex-col rounded-b-2xl pl-0 mb-0 flex-nowrap flex-row overflow-x-auto">
+        {% for item in menu_entries %}        
+            <li class="mt-0.5 {{ 'supports-[animation-timeline]:-ml-5' if loop.first else ''}} {{ 'supports-[animation-timeline]:-mr-5' if loop.last else ''}} md:mr-0 md:ml-0 w-full {{ 'md:border-t-2 md:border-slate-100 md:border-solid' if loop.last else "" }} flex-grow flex-shrink-0 basis-5/12 sm:flex-shrink sm:flex-grow-0 sm:basis-auto">
+                <a 
+                    href="{{ item.link }}" 
+                    class="
+                        {{ 'bg-yellow-100' if loop.last and NODE_ENV == "development" else "" }} 
+                        {{ 'bg-blue-50 font-bold' if (active_menu_item == item.key) else "" }} 
+                        px-4 py-3 rounded-lg flex items-center my-1 mx-2 text-base hocus:bg-blue-100 whitespace-nowrap
+                        md:justify-start
+                        justify-center
+                    "
+                >
+                    {{ item.name }}
+                </a>
+            </li>
+        {% endfor %}
+    </ul>
+</nav>

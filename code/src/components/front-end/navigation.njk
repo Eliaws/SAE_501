@@ -1,0 +1,9 @@
+<nav class="max-w-[1200px] mx-auto" role="navigation" aria-label="Menu principal">
+    <ul data-navigation="front-end" class="horizontal-scroll-shadow flex md:justify-end gap-x-10 overflow-x-auto sm:mr-0 mt-10 before:!-mt-0.5 before:!pt-0 after:!-mt-0.5 after:!pt-0">
+        {% for menu_item in menu %}
+            <li class="{{ 'supports-[animation-timeline]:-ml-9' if loop.first else ''}}{{ 'supports-[animation-timeline]:-mr-9' if loop.last else ''}}">
+                <a class="block whitespace-nowrap text-lg hocus:text-pink-600" href="{{ menu_item.link }}">{{ menu_item.name }}</a>
+            </li>
+        {% endfor %}
+    </ul>
+</nav>

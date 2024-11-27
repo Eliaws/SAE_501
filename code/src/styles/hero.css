@@ -1,0 +1,141 @@
+.bulle {
+    position: relative;
+    margin-top: 4.75rem;
+    margin-bottom: 3rem;
+
+    @media (screen(md)) {
+        margin-bottom: 6rem;
+    }
+
+    &:hover .bulle-icone-bordure {
+        translate: -30px 4px;
+        transform: scale(0.7);
+        @media (screen(sm)) {
+            transform: scale(1);
+        }
+    }
+    
+    &:hover .bulle-icone {
+        translate: 5px -6px;
+        transform: scale(0.7);
+        @media (screen(sm)) {
+            transform: scale(1);
+        }
+    }
+    
+    .titre {
+        font-family: "Times New Roman", Times, serif;
+        font-weight: bold;
+        text-align: left;
+    
+        @media (screen(sm)) {
+            text-align: right;
+        }
+    
+        @media (max-width: theme('screens.sm')) {
+            width: 100%;
+        }
+    }
+
+    .txt-grand {
+        font-size: 2.375rem;
+        color: theme("colors.slate.900");
+    
+        @media (screen(sm)) {
+            font-size: 3.375rem;
+        }
+    }
+
+    .txt-grand span,
+    .txt-petit span {
+        display: inline-block;
+        background-color: white;
+        padding: 0.25rem;
+        margin-bottom: 0.25rem;
+    }
+
+    .txt-petit {
+        color: theme("colors.slate.900");
+        font-size: 1.65rem;
+    
+        @media (screen(sm)) {
+            font-size: 2.125rem;
+        }
+    }
+}
+
+.bulle-icone {
+    position: absolute;
+    right: 0;
+    z-index: -1;
+    width: 384px;
+    height: 350px;
+    mask: url("/images/bulle.svg") no-repeat center / contain;
+    transform: scale(0.7);
+    top: -87px;
+    
+    @media (screen(sm)) {
+        transition: transform 0.3s, translate 0.3s;
+        right: 283px;
+        top: -46px;
+        transform: scale(1);
+    }
+
+    &.rose {
+        background-color: #ef509f;
+    }
+
+    &.rouge {
+        background-color: #eb0706;
+    }
+
+    &.vert {
+        background-color: #0ceec0;
+    }
+
+    &.orange {
+        background-color: #ee8f00;
+    }
+
+    &.bleu {
+        background-color: #011d37;
+    }
+}
+
+.bulle-icone-bordure {
+    position: absolute;
+    top: -101px;
+    right: 0;
+    z-index: -1;
+    width: 484px;
+    height: 360px;
+    mask: url("/images/bulle-bordure.svg") no-repeat center / contain;
+    transform: scale(0.7);
+    
+    @media (screen(sm)) {
+        transition: transform 0.3s, translate 0.3s;
+        right: 241px;
+        top: -60px;
+        transform: scale(1);
+    }
+
+    &.rose {
+        background-color: #a50253;
+    }
+
+    &.rouge {
+        background-color: #a50253;
+    }
+
+    &.vert {
+        background-color: #03886d;
+    }
+
+    &.orange {
+        background-color: #d13b00;
+    }
+
+    &.bleu {
+        background-color: #00a2ff;
+    }
+}

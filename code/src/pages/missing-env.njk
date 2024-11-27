@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" class="dark:bg-gray-800 dark:text-white text-slate-800">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+        <title>Error - Missing env file</title>
+
+        <link rel="stylesheet" href="/styles/reset.css">
+        <link rel="stylesheet" href="/styles/fonts.css">
+
+        <meta name="theme-color" content="rgb(185 28 28)"/>
+
+        <link rel="icon" href="/images/error-favicon.svg">
+
+        {% if NODE_ENV == "development" %}
+            <script type="module" src="/src/scripts/main.frontend.js" defer></script>
+        {% else %}
+            <script type="module" src="/{{ manifest['src/scripts/main.frontend.js'].file }}" defer></script>
+        {% endif %}
+    </head>
+    <body>
+        <header class="bg-red-700 text-white text-xl mb-2">
+            <h1 class="pr-[max(env(safe-area-inset-right),_theme(space.6))] pl-[max(env(safe-area-inset-left),_theme(space.6))] py-3 m-auto max-w-7xl">Error - Missing env file</h1>
+        </header>
+        <div class="m-auto max-w-7xl pr-[max(env(safe-area-inset-right),_theme(space.6))] pl-[max(env(safe-area-inset-left),_theme(space.6))]">
+            <p class="text-lg mb-4">You are using default env vars. Please copy and rename ./env/.env.prod.dist file into ./env/.env.prod.local.</p>
+        </div>
+    </body>
+</html>

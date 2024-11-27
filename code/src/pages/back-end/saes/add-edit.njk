@@ -1,0 +1,73 @@
+{% extends "layouts/back-end/base.njk" %}
+
+{% block title %}
+    {% if is_edit == true %}
+        Editer "{{ sae.title }}"
+    {% else %}
+        Créer SAÉ
+    {% endif %}
+{% endblock %}
+
+{% set chars_limit = 200 %}
+{% set active_menu_item = "saes" %}
+
+{% import "components/back-end/input-file.njk" as input_file with context %}
+
+{% block main %}
+    <div class="bg-white rounded-2xl shadow-md pb-6">
+        <header class="mb-1 p-6">
+            {% include "components/back-end/breadcrumb.njk" %}
+            <h2 class="text-4xl">
+                {% if is_edit == true %}
+					Editer
+					"{{ sae.title }}"
+				{% else %}
+					Créer SAÉ
+				{% endif %}
+            </h2>
+            <p class="text-sm">Les champs avec
+				<span class="font-bold text-slate-700 after:content-['*'] after:ml-0.5 after:text-red-500"></span>
+				sont requis
+			</p>
+        </header>
+        <div class="px-6">
+            {% for item in list_errors %}
+                <p class="rounded-lg p-3 bg-red-100 text-red-800 border-solid border-x border-y border-red-700 mb-3">{{ item }}</p>
+            {% endfor %}
+            {% if messages.success %}
+                <p class="rounded-lg p-3 bg-green-100 text-green-800 border-solid border-x border-y border-green-700 mb-3">{{ messages.success }}</p>
+            {% endif %}
+            <form action="" data-form method="post" enctype="multipart/form-data">
+                <label class="block mb-4">
+                    <span class="font-bold text-slate-700 after:content-['*'] after:ml-0.5 after:text-red-500">Titre</span>
+                    <input class="block bg-white w-full border border-slate-300 rounded-md py-2 pr-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm" type="text" name="title" value="{{ sae.title }}"/>
+                </label>
+
+                <div class="block mb-4">
+                    <label for="image">
+                        <span class="font-bold text-slate-700 after:ml-0.5 after:text-red-500">Image</span>
+                    </label>
+                    {{ input_file.field(sae.image, undefined, ".jpg, .jpeg, .png, .avif") }}
+                </div>
+
+                <label class="block mb-4">
+                    <span class="font-bold text-slate-700">Contenu</span>
+                    <textarea name="content" cols="15" rows="5" maxlength="{{ chars_limit }}" class="block bg-white w-full border border-slate-300 rounded-md py-2 pr-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm" aria-describedby="counter_description">{{ sae.content }}</textarea>
+                    <p class="text-sm" id="counter_description">
+						{{ chars_limit }} caractères restants
+					</p>
+                </label>
+
+                <div class="flex gap-x-3 gap-y-5 flex-col sm:flex-row">
+                    <button class="px-4 py-2 font-semibold text-sm bg-blue-700 hocus:bg-blue-950 text-white rounded-2xl shadow-sm inline-flex gap-1 items-center justify-center" type="submit">
+                        <svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10"/>
+                        </svg>
+                        Sauvegarder
+                    </button>
+                    <button class="px-4 py-2 font-semibold text-sm bg-neutral-100 hocus:bg-neutral-200 text-black rounded-2xl shadow-sm" type="reset">Réinitialiser</button>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}

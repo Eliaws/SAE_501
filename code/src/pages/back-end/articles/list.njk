@@ -1,0 +1,107 @@
+{% extends "layouts/back-end/base.njk" %}
+{% set active_menu_item = "articles" %}
+{% set using_asc = query_string_params.sorting == "asc" %}
+{% set sort_param = "desc" if using_asc == true else "asc" %}
+{% set sort_text = "Trier du plus récent au plus ancien" if using_asc == true else "Trier du plus ancien au plus récent" %}
+
+{% import "components/back-end/pagination.njk" as pagination with context %}
+{% import "components/back-end/list-actions.njk" as list_actions %}
+
+{% block main %}
+    <div class="bg-white rounded-2xl shadow-md pb-6">
+        <header class="mb-1 p-6 gap-2 @3xl/main:gap-0 flex justify-between @3xl/main:flex-row flex-col">
+            <div>
+                {% include "components/back-end/breadcrumb.njk" %}
+                <h2 class="text-4xl">
+                    Liste articles
+                </h2>
+                <p class="text-sm">{{ list_articles.count }} éléments au total</p>
+            </div>
+            <div class="flex gap-3 flex-col @xl:flex-row">
+                <a href="{{ admin_url ~ "/articles/add" }}" class="inline-flex gap-1 w-full sm:w-fit text-md text-white rounded-2xl items-center text-sm py-2 px-4 bg-blue-700 hocus:bg-blue-950 h-fit justify-center">
+                    <svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m3.75 9v6m3-3H9m1.5-12H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z"/>
+                    </svg>
+                    Ajouter un nouvel article
+                </a>
+                <a href="{{ "?sorting=" ~ sort_param }}" class="w-full flex gap-1 justify-center @3xl/main:hidden sm:w-fit text-md bg-neutral-100 hocus:bg-neutral-200 text-black rounded-2xl items-center text-sm py-2 px-4 h-fit text-center">
+                    {% if using_asc %}
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M3 4.5h14.25M3 9h9.75M3 13.5h5.25m5.25-.75L17.25 9m0 0L21 12.75M17.25 9v12" />
+                        </svg>
+                    {% else %}
+                        <svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M3 4.5h14.25M3 9h9.75M3 13.5h9.75m4.5-4.5v12m0 0-3.75-3.75M17.25 21 21 17.25" />
+                        </svg>
+                    {% endif %}
+                    Trier du plus récent au plus ancien
+                </a>
+            </div>
+        </header>
+
+        <div class="tooltip hidden bg-slate-800 text-white border border-gray-200 border-solid py-2 px-4 rounded-2xl" data-tooltip="sort">
+            <p class="text-sm">{{ sort_text }}</p>
+        </div>
+
+        <table class="w-full bg-white border-collapse">
+            <thead class="">
+                <tr class="text-slate-800">
+                    <th class="font-bold px-6 py-3 text-left border-solid border-slate-200 border-b min-w-52">Titre</th>
+                    <th class="font-bold px-6 py-3 text-left border-solid border-slate-200 border-b lg:hidden xl:[display:revert] @3xl/main:[display:revert]">Contenu</th>
+                    <th class="font-bold px-6 py-3 text-left border-solid border-slate-200 border-b">Activé ?</th>
+                    <th class="font-bold px-6 py-3 text-left border-solid border-slate-200 border-b">Auteur</th>
+                    <th class="font-bold text-left border-solid border-slate-200 border-b hover:bg-blue-50">
+                        <a href="{{ "?sorting=" ~ sort_param }}" class="flex gap-2 px-6 py-3 items-center" aria-sort="{{ "ascending" if using_asc else "descending" }}" title="{{ sort_text }}" data-tooltip-anchor="sort">
+                            <span>Dernière mise à jour</span>
+                            <div class="shrink-0">
+                                {% if using_asc %}
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M3 4.5h14.25M3 9h9.75M3 13.5h5.25m5.25-.75L17.25 9m0 0L21 12.75M17.25 9v12" />
+                                    </svg>
+                                {% else %}
+                                    <svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M3 4.5h14.25M3 9h9.75M3 13.5h9.75m4.5-4.5v12m0 0-3.75-3.75M17.25 21 21 17.25" />
+                                    </svg>
+                                {% endif %}
+                            </div>
+                        </a>
+                    </th>
+                    <th class=" px-6 py-3 border-solid border-slate-200 border-b"></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in list_articles.data %}
+                    <tr class="hover:bg-neutral-50 even:bg-blue-50">
+                        <td class="bg-transparent border-solid border-slate-200 border-b py-4 px-6 min-w-52" data-label="Titre">{{ item.title }}</td>
+                        <td class="py-4 px-6 bg-transparent border-solid border-slate-200 border-b shadow-transparent lg:hidden xl:[display:revert]" data-label="Contenu">
+                            <p class="line-clamp-3 md:line-clamp-1" title="{{ item.content }}">{{ item.content }}</p>
+                        </td>
+                        <td class="bg-transparent border-solid border-slate-200 border-b py-4 px-6" data-label="Activé ?">{{ "Oui" if item.is_active else "Non" }}</td>
+                        <td class="bg-transparent border-solid border-slate-200 border-b py-4 px-6" data-label="Auteur">
+                            {% set author = item.author.firstname ~ ' ' ~ item.author.lastname %}
+                            {% if item.author.firstname %}
+                                <a href="" class="text-blue-700 hover:text-blue-900">{{ author }}</a>
+                            {% else %}
+                                La rédaction
+                            {% endif %}
+                        </td>
+                        <td class="bg-transparent border-solid border-slate-200 border-b py-4 px-6" data-label="Dernière mise à jour"><time datetime="{{ item.updated_at }}">{{ item.updated_at|date("dd/LL/yyyy à HH:mm") }}</time></td>
+                        <td class="py-4 px-6 bg-transparent border-solid border-slate-200 border-b-2 @3xl/main:!border-b shadow-transparent lg:text-right align-middle">
+                            <div class="inline-flex gap-6 w-full justify-around">
+                                {{ list_actions.edit(admin_url ~ '/articles/' ~ item._id)}}
+                                {{ list_actions.delete(base_url ~ "/api/articles/" ~ item._id, item.title)}}
+                            </div>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="6" class="text-center bg-transparent border-solid border-slate-200 border-b py-4 px-6">Pas de contenu pour le moment</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <footer class="flex justify-between px-4 flex-col @3xl/main:flex-row relative items-center">
+            {{ pagination.item(list_articles) }}
+        </footer>
+    </div>
+{% endblock %}

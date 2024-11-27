@@ -1,0 +1,95 @@
+{% extends "layouts/front-end/base.njk" %}
+
+{% block title %}A propos
+{% endblock %}
+
+{% set list_anchors = [
+    {
+        name: "Présentation",
+        hash: "presentation"
+    },
+    {
+        name: "SAÉ",
+        hash: "sae"
+    },
+    {
+        name: "Exemples de SAÉ",
+        hash: "exemples"
+    }
+] %}
+
+{% block main %}
+    <ul class="flex justify-center gap-x-4 bg-neutral-50 mb-9 sm:flex-row flex-col gap-y-3 w-fit sm:mx-auto">
+        {% for item in list_anchors %}
+            <li>
+                <a href="#{{ item.hash }}" class="text-xl text-[#005A47] hocus:text-black">{{ item.name }}</a>
+            </li>
+        {% endfor %}
+    </ul>
+
+    <p class="my-4" id="{{ list_anchors[0].hash }}" tabindex="-1">
+        Le BUT métiers du multimédia et de l'internet (MMI) remplace le DUT MMI à partir de la rentrée 2021, auparavant appelé DUT SRC (services et réseaux de communication) jusqu'en mai 2013, qui était lancé à la rentrée universitaire 1994 par les IUT de Vélizy, Marne-la-Vallée, Saint-Raphaël et Verdun. Ce BUT offre une alternative aux anciens diplômes Bac+3, tels que la licence professionnelle en activités et techniques de communication et la licence professionnelle en systèmes informatiques et logiciels.
+    </p>
+
+    <p class="my-4">
+        Lorsque cette formation était proposée sous la forme d'un Diplôme Universitaire Technologique (DUT), elle se déroulait sur deux années (1 800 heures). En théorie, elle est accessible à tous les bacheliers, quelle que soit leur série. En moyenne, il y a de 30 à 35 heures de cours par semaine. Cette formation se divise en trois grands pôles, auxquels il faut ajouter le projet tutoré (300 heures) et les stages (420 heures). Les trois grands axes sont les suivants :
+    </p>
+
+    <ul class="list-disc list-inside">
+        <li>La culture contemporaine et langues étrangères (500 heures)</li>
+        <li>La culture scientifique et technique (700 heures)</li>
+        <li>La culture communicationnelle (600 heures)</li>
+    </ul>
+
+    <div class="my-4 rounded-lg overflow-hidden text-center">
+        <img src="images/img-quebec.jpg" alt="">
+    </div>
+
+    <p class="my-4">
+        A CY Cergy Paris Université, il est donné la possibilité aux étudiants de passer un semestre au Québec à l'Université du Québec à Chicoutimi (UQAC) dans une formation dont le contenu est proche de celui proposé à l'IUT. Il est également possible d'effectuer ce semestre après avoir été diplômé.
+        <span class="font-bold">Attention : les cours sont dispensés en langue française.</span>
+    </p>
+
+    <p class="text-3xl font-bold mt-12 target:text-[#005A47]" id="{{ list_anchors[1].hash }}" tabindex="-1">
+        <a href="#{{ list_anchors[1].hash }}" class="before:content-['#'] before:absolute before:right-[100%] before:top-[50%] before:-translate-y-2/4 before:invisible hocus:before:visible relative">
+            Situation d'Apprentissage et d'Évaluation
+        </a>
+    </p>
+
+    <p class="my-4">Dans l’optique de préparer au mieux les étudiants à leur future vie professionnelle, les étudiants sont regroupés en agences de communication de 3 à 7 personnes dans des projets appelés "SAÉ" ou Situation d'Apprentissage et d'Évaluation. Ces agences ont pour but d’encourager le travail d’équipe dans un cadre reprenant l'environnement du travail en entreprise.</p>
+
+    <p class="my-4">
+        La situation d'apprentissage et d'évaluation ou simplement SAÉ est la situation didactique que privilégie, au Québec, le Ministère de l'Éducation, Enseignement supérieur et Recherche (MEESR) par le biais du Programme de formation de l'école québécoise (PFEQ). Une SAÉ se définit comme un ensemble constitué d’une ou plusieurs tâches à réaliser par l’élève en vue d’atteindre le but fixé. Elle permet : à l’élève, de développer et d’exercer une ou plusieurs compétences disciplinaires et transversales; à l’enseignant, d’assurer le suivi du développement des compétences dans une perspective d’aide à l’apprentissage. Elle est donc centrée sur l'élève et préconise une approche constructiviste ou socioconstructiviste à l'école.
+    </p>
+
+    <p class="my-4">
+        Les SAÉ sont une nouveauté des diplômes BUT,
+        <span class="font-bold">elles visent à remplacer les Devoirs Sur Table et les notes à terme,</span>
+        en proposant une approche plus "ingénieure" de la scolarité avec des étudiants qui apprennent à résoudre des problèmes et non plus apprendre par cœur leurs cours.
+    </p>
+
+    <p class="text-3xl font-bold mt-12 target:text-[#005A47]" id="{{ list_anchors[2].hash }}" tabindex="-1">
+        <a href="#{{ list_anchors[2].hash }}" class="before:content-['#'] before:absolute before:right-[100%] before:top-[50%] before:-translate-y-2/4 before:invisible hocus:before:visible relative">
+            Exemples de projets réalisés en SAÉ
+        </a>
+    </p>
+
+    <ul class="snap-mandatory snap-x sm:px-0 pb-2 grid sm:grid-cols-2 xl:grid-cols-3 gap-x-3 gap-y-5 my-4 grid-flow-col auto-cols-[92%] sm:max-lg:landscape:grid-cols-none grid-cols-none md:max-lg:landscape:grid-flow-col sm:grid-flow-row overflow-x-auto -mr-4 sm:mr-0">
+        {% for item in list_saes.data %}
+            <li class="h-full snap-start px-0.5 last:pr-3 sm:max-lg:landscape:h-[65vh] sm:max-lg:landscape:max-h-[300px]">
+                <article class="shadow h-full rounded-lg overflow-hidden flex flex-col sm:max-lg:landscape:flex-row lg:landscape:flex-col">
+                    <div class="h-[300px] lg:h-[325px] sm:max-lg:landscape:h-full aspect-square">
+                        <img class="h-full w-full object-cover" src="{{ 'images/default-sae-image.png' if item.image|length == 0 else '/uploads/' ~ item.image }}" loading="lazy" alt="">
+                    </div>
+                    <section class="p-8 pb-10 sm:pb-14 grow">
+                        <p class="text-2xl font-bold pb-2">{{ item.title }}</p>
+                        {% set content = item.content | striptags(true) | escape | nl2br %}
+                        {% if content | length > 0 %}
+                            <p>{{ item.content | striptags(true) | escape | nl2br }}</p>
+                        {% endif %}
+                    </section>
+                </article>
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}

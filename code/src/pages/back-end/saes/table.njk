@@ -1,0 +1,34 @@
+{% macro table(list) %}
+    <table class="w-full bg-white border-collapse">
+        <thead>
+            <tr class="text-slate-800">
+                <th class="font-bold px-6 text-left border-solid border-slate-200 border-b py-3 min-w-52">Titre</th>
+                <th class="font-bold px-6 text-left border-solid border-slate-200 border-b py-3">Contenu</th>
+                <th class="px-6 border-solid border-slate-200 border-b py-3"></th>
+            </tr>
+        </thead>
+        
+        <tbody>
+            {% for item in list.data %}
+                <tr class="hover:bg-neutral-50 even:bg-blue-50">
+                    <td class="bg-transparent border-solid border-slate-200 border-b py-4 px-6 min-w-52" data-label="Titre">{{ item.title }}</td>
+                    <td class="py-4 px-6 bg-transparent border-solid border-slate-200 border-b shadow-transparent" data-label="Contenu">
+                        {% if item.content %}
+                            <p class="line-clamp-2 md:line-clamp-1" title="{{ item.content }}">{{ item.content }}</p>
+                        {% endif %}
+                    </td>
+                    <td class="py-4 px-6 bg-transparent border-solid border-slate-200 border-b-2 @3xl/main:!border-b shadow-transparent lg:text-right align-middle">
+                        <div class="inline-flex gap-6 w-full justify-around">
+                            {{ list_actions.edit("sae_form" | routeName({ id: item._id })) }}
+                            {{ list_actions.delete("sae_api" | routeName({ id: item._id }), item.title) }}
+                        </div>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="3" class="text-center bg-transparent border-solid border-slate-200 border-b py-4 px-6">Pas de contenu pour le moment</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endmacro %}

@@ -1,0 +1,98 @@
+{% extends "layouts/back-end/base.njk" %}
+
+{% import "components/back-end/list-actions.njk" as list_actions %}
+{% import "pages/back-end/saes/table.njk" as saes with context %}
+
+{% block main %}
+    <div class="bg-white rounded-2xl mb-10 shadow-md pb-6">
+        <header class="mb-1 p-6 gap-2 lg:gap-0 flex justify-between lg:flex-row flex-col">
+            <div>
+                <h2 class="text-4xl">
+                    Liste articles
+                </h2>
+                <p class="text-sm">{{ list_articles.count }} éléments au total</p>
+            </div>
+            <a href="{{ admin_url ~ "/articles" }}" class="inline-flex gap-1 w-full sm:w-fit text-md text-white rounded-2xl items-center text-sm py-2 px-4 bg-blue-700 hocus:bg-blue-950 h-fit justify-center">
+                <svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 6.75h12M8.25 12h12m-12 5.25h12M3.75 6.75h.007v.008H3.75V6.75Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0ZM3.75 12h.007v.008H3.75V12Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm-.375 5.25h.007v.008H3.75v-.008Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z"/>
+                </svg>
+                Voir tout
+            </a>
+        </header>
+
+        <table class="w-full bg-white rounded-lg overflow-hidden border-collapse">
+            <thead>
+                <tr class="text-slate-800">
+                    <th class="font-bold px-6 py-3 text-left border-solid border-slate-200 border-b">Titre</th>
+                    <th class="font-bold px-6 py-3 text-left border-solid border-slate-200 border-b">Contenu</th>
+                    <th class="font-bold px-6 py-3 text-left border-solid border-slate-200 border-b">Auteur</th>
+                    <th class="font-bold px-6 py-3 text-left border-solid border-slate-200 border-b">
+                        Dernière mise à jour
+                    </th>
+                    <th class="px-6 py-3 border-solid border-slate-200 border-b"></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in list_articles.data %}
+                    <tr class="hover:bg-neutral-50 even:bg-blue-50">
+                        <td class="bg-transparent border-solid border-slate-200 border-b py-4 px-6" data-label="Titre">{{ item.title }}</td>
+                        <td class="py-4 px-6 bg-transparent border-solid border-slate-200 border-b shadow-transparent  @2xl/main:max-w-[300px]" data-label="Contenu">
+                            <p class="line-clamp-2 md:line-clamp-1" title="{{ item.content }}">{{ item.content }}</p>
+                        </td>
+                        <td class="bg-transparent border-solid border-slate-200 border-b p-6" data-label="Auteur">
+                            {% set author = item.author.firstname ~ ' ' ~ item.author.lastname %}
+                            {% if item.author.firstname %}
+                                <a href="" class="text-blue-700 hover:text-blue-900">{{ author }}</a>
+                            {% else %}
+                                La rédaction
+                            {% endif %}
+                        </td>
+                        <td class="bg-transparent border-solid border-slate-200 border-b py-4 px-6" data-label="Dernière mise à jour">
+                            <time datetime="{{ item.updated_at }}">{{ item.updated_at|date("dd/LL/yyyy à HH:mm") }}</time>
+                        </td>
+
+                        <td class="py-4 px-6 bg-transparent border-solid border-slate-200 border-b-2 @3xl/main:!border-b shadow-transparent lg:text-right align-middle">
+                            <div class="inline-flex gap-6 w-full justify-around">
+                                {{ list_actions.edit(admin_url ~ '/articles/' ~ item._id)}}
+                                {{ list_actions.delete(base_url ~ "/api/articles/" ~ item._id, item.title)}}
+                            </div>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="5" class="text-center bg-transparent border-solid border-slate-200 border-b py-4 px-6">Pas de contenu pour le moment</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <div class="bg-white rounded-2xl mb-10 shadow-md pb-6">
+        <header class="mb-1 p-6 gap-2 lg:gap-0 flex justify-between lg:flex-row flex-col">
+            <div>
+                <h2 class="text-4xl">
+                    Liste SAEs
+                </h2>
+                <p class="text-sm">{{ list_saes.count }} éléments au total - <span class="font-bold">Seuls les 9 derniers éléments sont affichés sur le site</span>
+                </p>
+            </div>
+            <a href="{{ admin_url ~ "/saes" }}" class="inline-flex gap-1 w-full sm:w-fit text-md text-white rounded-2xl items-center text-sm py-2 px-4 bg-blue-700 hocus:bg-blue-950 h-fit justify-center">
+                <svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 6.75h12M8.25 12h12m-12 5.25h12M3.75 6.75h.007v.008H3.75V6.75Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0ZM3.75 12h.007v.008H3.75V12Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm-.375 5.25h.007v.008H3.75v-.008Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z"/>
+                </svg>
+                Voir tout
+            </a>
+        </header>
+
+        {{ saes.table(list_saes)}}
+    </div>
+
+    <div class="bg-white rounded-2xl mb-10 shadow-md pb-6">
+        <header class="mb-1 p-6 gap-2 lg:gap-0 flex justify-between lg:flex-row flex-col">
+            <h2 class="text-4xl">
+                Liste messages
+            </h2>
+        </header>
+        <p>A compléter</p>
+    </div>
+{% endblock %}
