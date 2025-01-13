@@ -43,4 +43,29 @@
             {% block main %}{% endblock %}
         </main>
     </body>
+    <footer class='flex justify-center'>
+        {% block footer %}
+                <p>Certains textes sont issus de Wikipédia</p>
+                <ul class="liste-liens">
+                    <li>
+                        <a aria-label="Ouverture dans un nouvel onglet" href="https://fr-fr.facebook.com/CYCergyParisUniversite/" title="Ouverture dans un nouvel onglet" target="_blank">Facebook</a>
+                    </li>
+                    <li>
+                        <a aria-label="Ouverture dans un nouvel onglet" href="https://twitter.com/universitecergy?lang=fr" title="Ouverture dans un nouvel onglet"  target="_blank">Twitter</a>
+                    </li>
+                    <li>
+                        <a aria-label="Ouverture dans un nouvel onglet" href="https://fr-fr.facebook.com/CYCergyParisUniversite/" title="Ouverture dans un nouvel onglet"  target="_blank">Université CY Paris Université</a>
+                    </li>
+                    <li aria-hidden="true">
+                        •
+                    </li>
+                </ul>
+
+                <p class="txt-credits">SAE 501 • © 2021-2025 - BUT MMI - CY Paris Université - Site de Sarcelles</p>
+
+                <figure class="logo">
+                    <img src="ressources/images/logo-cyu-couleur.svg" alt="">
+                </figure>
+        {% endblock %}
+    </footer>
 </html>
