@@ -43,29 +43,32 @@
             {% block main %}{% endblock %}
         </main>
     </body>
-    <footer class='flex justify-center'>
+    <footer class='text-center'>
         {% block footer %}
+            <div class="my-2">
                 <p>Certains textes sont issus de Wikipédia</p>
-                <ul class="liste-liens">
-                    <li>
+            </div>
+            <div>
+                <ul class="flex justify-center gap-x-2 my-2 text-blue">
+                    <li class='text-blue-600 hover:underline hover:underline-offset-2'>
                         <a aria-label="Ouverture dans un nouvel onglet" href="https://fr-fr.facebook.com/CYCergyParisUniversite/" title="Ouverture dans un nouvel onglet" target="_blank">Facebook</a>
                     </li>
-                    <li>
+                    <li class='text-blue-600 hover:underline hover:underline-offset-2'>
                         <a aria-label="Ouverture dans un nouvel onglet" href="https://twitter.com/universitecergy?lang=fr" title="Ouverture dans un nouvel onglet"  target="_blank">Twitter</a>
                     </li>
-                    <li>
+                    <li class='text-blue-600 hover:underline hover:underline-offset-2'>
                         <a aria-label="Ouverture dans un nouvel onglet" href="https://fr-fr.facebook.com/CYCergyParisUniversite/" title="Ouverture dans un nouvel onglet"  target="_blank">Université CY Paris Université</a>
                     </li>
-                    <li aria-hidden="true">
-                        •
-                    </li>
                 </ul>
-
-                <p class="txt-credits">SAE 501 • © 2021-2025 - BUT MMI - CY Paris Université - Site de Sarcelles</p>
-
-                <figure class="logo">
-                    <img src="ressources/images/logo-cyu-couleur.svg" alt="">
+            </div>
+            <div>
+                <p class="my-2 font-bold">SAE 501 • © 2021-2025 - BUT MMI - CY Paris Université - Site de Sarcelles</p>
+            </div>
+            <div class="text-center">
+                <figure class=" my-2">
+                    <img src="/images/logo-cyu-couleur.svg" alt="">
                 </figure>
+            </div>
         {% endblock %}
     </footer>
 </html>
