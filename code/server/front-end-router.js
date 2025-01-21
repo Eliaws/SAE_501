@@ -56,6 +56,11 @@ router.get("/a-propos(.html)?", routeName("about"), async (_req, res) => {
 router.get("/nous-contacter(.html)?", async (req, res) => {
     res.render("pages/front-end/contact.njk", {
     });
-})
+});
+
+// Route 404 : Doit être la dernière route
+router.use((req, res) => {
+    res.status(404).render("pages/errors/404.njk");
+});
 
 export default router;
