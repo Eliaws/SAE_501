@@ -444,6 +444,11 @@ if (process.env.NODE_ENV === "production") {
 const listDomains = [hostip, "::"];
 const port = envVars?.parsed?.PORT || 3900;
 
+// Route 404 : Doit être la dernière route
+app.get("*", (req, res) => {
+    res.status(404).render("pages/errors/404.njk");
+});
+
 app.listen(port, listDomains, () => {
     console.log("---------------------------");
     console.log(

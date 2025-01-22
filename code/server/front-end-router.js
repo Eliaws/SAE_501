@@ -58,9 +58,5 @@ router.get("/nous-contacter(.html)?", async (req, res) => {
     });
 });
 
-// Route 404 : Doit être la dernière route
-router.use((req, res) => {
-    res.status(404).render("pages/errors/404.njk");
-});
 
 export default router;
