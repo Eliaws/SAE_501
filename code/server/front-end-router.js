@@ -63,5 +63,10 @@ router.get("/lieux(.html)?", async (req, res) => {
     });
 });
 
+router.get("/sur-les-medias(.html)?", async (req, res) => {
+    res.render("pages/front-end/medias.njk", {
+    });
+});
+
 
 export default router;
