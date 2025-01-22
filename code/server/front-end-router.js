@@ -58,5 +58,10 @@ router.get("/nous-contacter(.html)?", async (req, res) => {
     });
 });
 
+router.get("/lieux(.html)?", async (req, res) => {
+    res.render("pages/front-end/lieux.njk", {
+    });
+});
+
 
 export default router;
