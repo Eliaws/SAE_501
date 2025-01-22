@@ -1,57 +1,48 @@
 {% extends "layouts/front-end/base.njk" %}
 
-{% block title %}Nous contacter
-{% endblock %}
+{% block title %}Lieux de Vie{% endblock %}
 
+{% set list_content = [
+    {
+        image: "../public/image/default-sae-image.png",
+        title: "Bibliothèque universitaire",
+        text: "La bibliothèque universitaire est un atout indispensable à votre réussite. Elle met à disposition des collections et des espaces de travail adaptés."
+    },
+    {
+        image: "/path/to/image2.jpg",
+        title: "Se restaurer",
+        text: "Les restaurants du CROUS vous permettent de déjeuner pour un tarif social, accessible avec votre carte étudiante."
+    },
+    {
+        image: "/path/to/image3.jpg",
+        title: "Réseau des fablabs",
+        text: "Le réseau des fablabs permet d’expérimenter, tester et échanger dans des lieux collaboratifs et innovants."
+    }
+] %}
 
 {% block main %}
-    <form class="mt-5 max-w-md mx-auto" data-async-form="contact_form">
-        <div class="grid md:grid-cols-2 md:gap-6">
-            <div class="relative z-0 w-full mb-5 group">
-                <input type="text" name="firstname" id="firstname" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-900 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
-                <label for="firstname" class="peer-focus:font-medium absolute text-sm text-gray-900  duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
-                Prénom
-                </label>
+<div>
+    <h1 class="text-3xl font-bold lg:col-span-2 mt-6 lg:mt-0">Lieux de Vie</h1>
+    <p>
+        Entre les cours, l'université et ses IUT proposent de nombreux lieux de convivialité ou d'idéation. Divers et variés, 
+        ils permettent aux étudiants, de toute formation, de découvrir de nouveaux horizons et surtout de rencontrer 
+        les étudiants d'autres BUT.
+    </p>
+</div>
+
+<div class="flex flex-col gap-8 mt-8">
+    {% for item in list_content %}
+        <div class="flex items-center gap-6 {% if loop.index is odd %}flex-row{% else %}flex-row-reverse{% endif %}">
+            <!-- Image Section -->
+            <div class="flex-1">
+                <img src="{{ item.image }}" alt="Image de {{ item.title }}" class="w-full h-auto object-cover">
             </div>
-            <div class="relative z-0 w-full mb-5 group">
-                <input type="text" name="lastname" id="lastname" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-900 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
-                <label for="lastname" class="peer-focus:font-medium absolute text-sm text-gray-900  duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
-                Nom de famille
-                </label>
-            </div>
-        </div>
-        <div class="relative z-0 w-full mb-5 group">
-            <input type="email" name="email" id="email" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-900 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
-            <label for="email" class="peer-focus:font-medium absolute text-sm text-gray-900  duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
-            Adresse E-mail
-            </label>
-        </div>
-        <div class="flex flex-col my-2 space-y-2">
-            <label for="message" class="block text-sm font-semibold text-gray-900 underline underline-offset-2">Contenu du message :</label>
-            <textarea id="contenu" rows="4" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-900 focus:ring-blue-500 focus:border-blue-500" placeholder="J'aimerai avoir une information sur..."></textarea>
-        </div>
-        <div class="flex my-2">
-            <div class="flex items-center me-4">
-                <input id="inline-radio" type="radio" value="" name="inline-radio-group" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-900 focus:ring-blue-500">
-                <label for="inline-radio" class="ms-2 text-sm font-medium text-gray-900">Non concerné</label>
-            </div>
-            <div class="flex items-center me-4">
-                <input id="inline-2-radio" type="radio" value="" name="inline-radio-group" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-900 focus:ring-blue-500">
-                <label for="inline-2-radio" class="ms-2 text-sm font-medium text-gray-900">Parent</label>
-            </div>
-            <div class="flex items-center me-4">
-                <input id="inline-3-radio" type="radio" value="" name="inline-radio-group" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-900 focus:ring-blue-500">
-                <label for="inline-3-radio" class="ms-2 text-sm font-medium text-gray-900">Etudiant</label>
-            </div>
-            <div class="flex items-center me-4">
-                <input id="inline-4-radio" type="radio" value="" name="inline-radio-group" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-900 focus:ring-blue-500">
-                <label for="inline-4-radio" class="ms-2 text-sm font-medium text-gray-900">Autre</label>
+            <!-- Text Section -->
+            <div class="flex-1">
+                <h2 class="text-2xl font-bold mb-4">{{ item.title }}</h2>
+                <p>{{ item.text }}</p>
             </div>
         </div>
-        <div class='mt-4'>
-            <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center">
-                Envoyer
-            </button>
-        </div>
-    </form>
+    {% endfor %}
+</div>
 {% endblock %}
