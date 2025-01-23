@@ -2,6 +2,7 @@ import express from "express";
 import axios from "axios";
 import mongoose from "mongoose";
 import querystring from "querystring";
+import routeName from "#server/utils/name-route.middleware.js";
 
 import upload from "#server/uploader.js";
 
@@ -9,7 +10,7 @@ const base = "auteurs";
 const router = express.Router();
 
 // Get multiple authors
-router.get(`/${base}`, async (req, res) => {
+router.get(`/${base}`, routeName("auteur_list"), async (req, res) => {
     const queryParams = querystring.stringify({ per_page: 7, ...req.query });
     let options = {
         method: "GET",
@@ -44,7 +45,7 @@ router.get([`/${base}/:id`, `/${base}/add`], async (req, res) => {
         }
     }
 
-    res.render("/", {
+    res.render("pages/back-end/authors/add-edit.njk", {
         author: result?.data || {},
         list_errors: listErrors,
         is_edit: isEdit,
@@ -88,7 +89,7 @@ router.post([`/${base}/:id`, `/${base}/add`], upload.single("image"), async (req
         ressource = e.response.data.ressource || {};
     } finally {
         if (listErrors.length || isEdit) {
-            res.render("", {
+            res.render("pages/back-end/authors/add-edit.njk", {
                 author: ressource,
                 list_errors: listErrors,
                 is_edit: isEdit,
