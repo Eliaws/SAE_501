@@ -2,14 +2,14 @@
 
 {% block title %}
     {% if is_edit == true %}
-        Editer "{{ auteur.title }}"
+        Editer "{{ author.title }}"
     {% else %}
         Créer Auteur
     {% endif %}
 {% endblock %}
 
 {% set chars_limit = 150 %}
-{% set active_menu_item = "auteurs" %}
+{% set active_menu_item = "authors" %}
 
 {% import "components/back-end/input-file.njk" as input_file with context %}
 
@@ -20,7 +20,7 @@
             <h2 class="text-4xl">
                 {% if is_edit == true %}
 					Editer
-					"{{ auteur.firstname }} {{ auteur.lastname }}"
+					"{{ author.firstname }} {{ author.lastname }}"
 				{% else %}
 					Créer Auteur
 				{% endif %}
@@ -40,19 +40,19 @@
             <form action="" data-form method="post" enctype="multipart/form-data">
                 <label class="block mb-4">
                     <span class="font-bold text-slate-700 after:content-['*'] after:ml-0.5 after:text-red-500">Prénom</span>
-                    <input class="block bg-white w-full border border-slate-300 rounded-md py-2 pr-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm" type="text" name="title" value="{{ auteur.firstname }}"/>
+                    <input class="block bg-white w-full border border-slate-300 rounded-md py-2 pr-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm" type="text" name="firstname" value="{{ author.firstname }}"/>
                 </label>
                 <label class="block mb-4">
                     <span class="font-bold text-slate-700 after:content-['*'] after:ml-0.5 after:text-red-500">Nom de famille</span>
-                    <input class="block bg-white w-full border border-slate-300 rounded-md py-2 pr-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm" type="text" name="title" value="{{ auteur.lastname }}"/>
+                    <input class="block bg-white w-full border border-slate-300 rounded-md py-2 pr-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm" type="text" name="lastname" value="{{ author.lastname }}"/>
                 </label>
                 <label class="block mb-4">
                     <span class="font-bold text-slate-700 after:content-['*'] after:ml-0.5 after:text-red-500">Email</span>
-                    <input class="block bg-white w-full border border-slate-300 rounded-md py-2 pr-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm" type="text" name="title" value="{{ auteur.email }}"/>
+                    <input class="block bg-white w-full border border-slate-300 rounded-md py-2 pr-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm" type="text" name="email" value="{{ author.email }}"/>
                 </label>
                 <label class="block mb-4">
-                    <span class="font-bold text-slate-700">Bio de l'auteur</span>
-                    <textarea name="content" cols="15" rows="5" maxlength="{{ chars_limit }}" class="block bg-white w-full border border-slate-300 rounded-md py-2 pr-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm" aria-describedby="counter_description">{{ auteur.bio }}</textarea>
+                    <span class="font-bold text-slate-700">Bio de l'author</span>
+                    <textarea name="bio" cols="15" rows="5" maxlength="{{ chars_limit }}" class="block bg-white w-full border border-slate-300 rounded-md py-2 pr-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm" aria-describedby="counter_description">{{ author.bio }}</textarea>
                     <p class="text-sm" id="counter_description">
 						{{ chars_limit }} caractères restants
 					</p>
@@ -61,9 +61,14 @@
                     <label for="image">
                         <span class="font-bold text-slate-700 after:ml-0.5 after:text-red-500">Image</span>
                     </label>
-                    {{ input_file.field(auteur.image, undefined, ".jpg, .jpeg, .png, .avif") }}
+                    {{ input_file.field(author.image, undefined, ".jpg, .jpeg, .png, .avif") }}
                 </div>
-            <!-- Faire un champ couleur préférée si possible -->           
+            <!-- Faire un champ couleur préférée si possible --> 
+                <label class="block mb-4">
+                    <span class="font-bold text-slate-700">Couleurs de profil</span>
+                    <p class="text-sm">Choisissez une couleur pour l'author entrant un code hexadécimal, si aucune est choisie la couleur sera l'hexa #ff0000 : <span class="text-xl" style="color: #ff0000;">●</span> </p>
+                    <input class="block bg-white w-full border border-slate-300 rounded-md py-2 pr-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm" type="text" name="color" placeholder='#ff0000' value="{{ author.color }}"/>
+                </label>
                 <div class="flex gap-x-3 gap-y-5 flex-col sm:flex-row">
                     <button class="pr-4 py-2 font-semibold text-sm bg-blue-700 hocus:bg-blue-950 text-white rounded-2xl shadow-sm inline-flex gap-1 items-center justify-center" type="submit">
                         <svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">

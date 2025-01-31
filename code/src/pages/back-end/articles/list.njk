@@ -15,7 +15,9 @@
                 <h2 class="text-4xl">
                     Liste articles
                 </h2>
-                <p class="text-sm">{{ list_articles.count }} éléments au total</p>
+                <p class="text-sm">
+                    {{ list_articles.count }} article{% if list_articles.count > 1 %}s{% endif %} au total
+                </p>     
             </div>
             <div class="flex gap-3 flex-col @xl:flex-row">
                 <a href="{{ admin_url ~ "/articles/add" }}" class="inline-flex gap-1 w-full sm:w-fit text-md text-white rounded-2xl items-center text-sm py-2 px-4 bg-blue-700 hocus:bg-blue-950 h-fit justify-center">

@@ -6,7 +6,7 @@ import routeName from "#server/utils/name-route.middleware.js";
 
 import upload from "#server/uploader.js";
 
-const base = "auteurs";
+const base = "authors";
 const router = express.Router();
 
 // Get multiple authors
@@ -20,14 +20,14 @@ router.get(`/${base}`, routeName("auteur_list"), async (req, res) => {
     try {
         result = await axios(options);
     } catch {}
-
+    
     res.render("pages/back-end/authors/list.njk", {
         list_authors: result.data,
     });
 });
 
 // Get or create author
-router.get([`/${base}/:id`, `/${base}/add`], async (req, res) => {
+router.get([`/${base}/:id([a-f0-9]{24})`, `/${base}/add`], routeName("author_form"), async (req, res) => {
     const options = {
         method: "GET",
         url: `${res.locals.base_url}/api/${base}/${req.params.id}`,
@@ -53,7 +53,7 @@ router.get([`/${base}/:id`, `/${base}/add`], async (req, res) => {
 });
 
 // Create or update author
-router.post([`/${base}/:id`, `/${base}/add`], upload.single("image"), async (req, res) => {
+router.post([`/${base}/:id([a-f0-9]{24})`, `/${base}/add`], routeName("author_form"), upload.single("image"), async (req, res) => {
     let ressource = null;
     const isEdit = mongoose.Types.ObjectId.isValid(req.params.id);
     let listErrors = [];
