@@ -80,6 +80,7 @@ router.get(`/${base}`, async (req, res) => {
                     image: 1,
                     bio: 1,
                     email: 1,
+                    color: 1,
                     nb_articles: { $size: "$list_articles" },
                 },
             },
@@ -293,7 +294,7 @@ router.post(`/${base}`, upload.single("image"), async (req, res) => {
             image_path: targetPath,
             errors: listErrors,
             image_name: imageName,
-        } = uploadImage(uploadedImage, res.locals.upload_path));
+        } = await uploadImage(uploadedImage, res.locals.upload_path));
         imagePayload = { image: imageName };
     }
 
@@ -390,7 +391,7 @@ router.put(`/${base}/:id([a-f0-9]{24})`, upload.single("image"), async (req, res
             image_path: targetPath,
             errors: listErrors,
             image_name: imageName,
-        } = uploadImage(uploadedImage, res.locals.upload_path));
+        } = await uploadImage(uploadedImage, res.locals.upload_path));
         imagePayload = { image: imageName };
     }
 
