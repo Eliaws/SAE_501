@@ -32,7 +32,7 @@ router.get("/", routeName("homepage"), async (req, res) => {
     } catch (_error) {}
 
     res.render("pages/front-end/index.njk", {
-        list_articles: result.data,
+        list_articles: result.data.data,
     });
 });
 
