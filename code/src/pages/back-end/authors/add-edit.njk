@@ -2,7 +2,7 @@
 
 {% block title %}
     {% if is_edit == true %}
-        Editer "{{ author.title }}"
+        Editer "{{ author.firstname ~ " " ~ author.lastname }}"
     {% else %}
         Créer Auteur
     {% endif %}
