@@ -25,6 +25,7 @@
 					Créer Article
 				{% endif %}
             </h2>
+            <p>{{ "test : " ~ list_authors }}</p>
             <p class="text-sm">Les champs avec
 				<span class="font-bold text-slate-700 after:content-['*'] after:ml-0.5 after:text-red-500"></span>
 				sont requis
@@ -42,20 +43,32 @@
                     <span class="font-bold text-slate-700 after:content-['*'] after:ml-0.5 after:text-red-500">Titre de l'article</span>
                     <input class="block bg-white w-full border border-slate-300 rounded-md py-2 pr-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm" type="text" name="title" value="{{ article.title }}"/>
                 </label>
+                <label class="block mb-4">
+                    <span class="font-bold text-slate-700">Abstract</span>
+                    <input class="block bg-white w-full border border-slate-300 rounded-md py-2 pr-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm" type="text" name="abstract" value="{{ article.abstract }}"/>
+                </label>
+                <label class="block mb-4">
+                    <span class="font-bold text-slate-700">Slug</span>
+                    <input class="block bg-white w-full border border-slate-300 rounded-md py-2 pr-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm" type="text" name="slug" value="{{ article.slug }}"/>
+                </label>
 
                 <div class="block mb-4">
                     <label for="image">
-                        <span class="font-bold text-slate-700 after:ml-0.5 after:text-red-500">Image</span>
+                        <span class="font-bold text-slate-700 after:content-['*'] after:ml-0.5 after:text-red-500">Image</span>
                     </label>
                     {{ input_file.field(article.image, undefined, ".jpg, .jpeg, .png, .avif") }}
                 </div>
 
                 <label class="block mb-4">
-                    <span class="font-bold text-slate-700">Contenu de l'article</span>
+                    <span class="font-bold text-slate-700 after:content-['*'] after:ml-0.5 after:text-red-500">Contenu de l'article</span>
                     <textarea name="content" cols="15" rows="5" maxlength="{{ chars_limit }}" class="block bg-white w-full border border-slate-300 rounded-md py-2 pr-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm" aria-describedby="counter_description">{{ article.content }}</textarea>
                     <p class="text-sm" id="counter_description">
 						{{ chars_limit }} caractères restants
 					</p>
+                </label>
+                <label class="block mb-4">
+                    <span class="font-bold text-slate-700">Lien vers la vidéo YouTube</span>
+                    <input class="block bg-white w-full border border-slate-300 rounded-md py-2 pr-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm" type="text" name="yt_video_id" value="{{ article.yt_video_id }}"/>
                 </label>
                 <label class="block mb-4">
                     <div class="flex items-center ps-4 border border-gray-200 rounded">
@@ -66,8 +79,9 @@
                 <label class="block mb-4">
                     <span class="font-bold text-slate-700">Auteur :</span>
                     <select name="author" class="block bg-white w-full border border-slate-300 rounded-md py-2 pr-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm">
-                        {% for author in authors %}
-                            <option value="{{ authors.id }}">{{ authors.name }}</option>
+                        <option value="null">--Choisir un auteur--</option>
+                        {% for author in list_authors %}
+                            <option value="{{ author._id }}">{{author.firstname ~' '~ author.lastname }}</option>
                         {% endfor %}
                     </select>
                     <!-- Ajouter boucle for pour les auteurs-->

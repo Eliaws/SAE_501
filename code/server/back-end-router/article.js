@@ -31,6 +31,7 @@ router.get([`/${base}/:id`, `/${base}/add`], async (req, res) => {
 
     let result = {};
     let listErrors = [];
+    let listAuthors = [];
 
     try {
         if (isEdit) {
@@ -40,6 +41,11 @@ router.get([`/${base}/:id`, `/${base}/add`], async (req, res) => {
             };
             result = await axios(options);
         }
+        listAuthors = await axios({
+            method: "GET",
+            url: `${res.locals.base_url}/api/authors`,
+        });
+        listAuthors = listAuthors.data.data;
     } catch (error) {
         listErrors = error.response.data.errors;
     }
@@ -47,6 +53,7 @@ router.get([`/${base}/:id`, `/${base}/add`], async (req, res) => {
     res.render("pages/back-end/articles/add-edit.njk", {
         article: result?.data || {},
         list_errors: listErrors,
+        list_authors: listAuthors,
         is_edit: isEdit,
     });
 });
