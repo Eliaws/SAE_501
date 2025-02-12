@@ -1,6 +1,6 @@
 {% extends "layouts/front-end/base.njk" %}
 
-{% block title %}Article {# Requête Titre Article à recupérer sur la BDD #}
+{% block title %}{{ article.title }}
 {% endblock %}
 
 
@@ -9,7 +9,7 @@
 <article>
     <header>
         <h1>{{ article.title }}</h1>
-        <p>Par {{ article.author.firstname~' '~article.author.lastname }} le {{ article.updated_at }}</p> {# Modif de la date via fonction js en cours de recherche #}
+        <p>Par {{ article.author.firstname~' '~article.author.lastname }} le <time datetime="{{ article.updated_at }}">{{ article.updated_at|date("dd/LL/yyyy à HH:mm") }}</time></p> {# Modif de la date via fonction js en cours de recherche #}
     </header>
     <section>
         <p>{{ article.content }}</p>
