@@ -5,7 +5,7 @@
 
 
 {% block main %}
-    <form class="mt-5 max-w-md mx-auto" data-async-form="contact_form">
+    <form class="mt-5 max-w-md mx-auto" method="post" data-async-form="contact_form">
         <div class="grid md:grid-cols-2 md:gap-6">
             <div class="relative z-0 w-full mb-5 group">
                 <input type="text" name="firstname" id="firstname" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-900 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
@@ -27,25 +27,25 @@
             </label>
         </div>
         <div class="flex flex-col my-2 space-y-2">
-            <label for="message" class="block text-sm font-semibold text-gray-900 underline underline-offset-2">Contenu du message :</label>
-            <textarea id="contenu" rows="4" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-900 focus:ring-blue-500 focus:border-blue-500" placeholder="J'aimerai avoir une information sur..."></textarea>
+            <label for="content" class="block text-sm font-semibold text-gray-900 underline underline-offset-2">Contenu du message :</label>
+            <textarea id="content" rows="8" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-900 focus:ring-blue-500 focus:border-blue-500" placeholder="J'aimerai avoir une information sur..."></textarea>
         </div>
         <div class="flex my-2">
             <div class="flex items-center me-4">
-                <input id="inline-radio" type="radio" value="" name="inline-radio-group" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-900 focus:ring-blue-500">
-                <label for="inline-radio" class="ms-2 text-sm font-medium text-gray-900">Non concerné</label>
+                <input id="identity" type="radio" value="non_precise" name="identity" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-900 focus:ring-blue-500">
+                <label for="identity" class="ms-2 text-sm font-medium text-gray-900">Non précisé</label>
             </div>
             <div class="flex items-center me-4">
-                <input id="inline-2-radio" type="radio" value="" name="inline-radio-group" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-900 focus:ring-blue-500">
-                <label for="inline-2-radio" class="ms-2 text-sm font-medium text-gray-900">Parent</label>
+                <input id="identity" type="radio" value="parent" name="identity" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-900 focus:ring-blue-500">
+                <label for="identity" class="ms-2 text-sm font-medium text-gray-900">Parent</label>
             </div>
             <div class="flex items-center me-4">
-                <input id="inline-3-radio" type="radio" value="" name="inline-radio-group" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-900 focus:ring-blue-500">
-                <label for="inline-3-radio" class="ms-2 text-sm font-medium text-gray-900">Etudiant</label>
+                <input id="identity" type="radio" value="etudiant" name="identity" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-900 focus:ring-blue-500">
+                <label for="identity" class="ms-2 text-sm font-medium text-gray-900">Etudiant</label>
             </div>
             <div class="flex items-center me-4">
-                <input id="inline-4-radio" type="radio" value="" name="inline-radio-group" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-900 focus:ring-blue-500">
-                <label for="inline-4-radio" class="ms-2 text-sm font-medium text-gray-900">Autre</label>
+                <input id="identity" type="radio" value="autre" name="identity" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-900 focus:ring-blue-500">
+                <label for="identity" class="ms-2 text-sm font-medium text-gray-900">Autre</label>
             </div>
         </div>
         <div class='mt-4'>
