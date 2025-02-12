@@ -68,5 +68,20 @@ router.get("/sur-les-medias(.html)?", async (req, res) => {
     });
 });
 
+router.get("/article/:id", async (req, res) => {
+    const options = {
+        method: "GET",
+        url: `${res.locals.base_url}/api/articles/${req.params.id}`,
+    };
+
+    let result = {};
+    try {
+        result = await axios(options);
+    } catch (_error) {}
+
+    res.render("pages/front-end/article.njk", {
+        article: result.data,
+    });
+});
 
 export default router;

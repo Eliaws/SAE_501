@@ -10,13 +10,14 @@
             <ul class="flex md:flex-row sm:landscape:flex-col flex-col lg:flex-col gap-6">
                 {% for article in list_articles %}
                     <li>
-                        <a class="flex flex-col sm:max-lg:landscape:flex-row w-full shadow hocus:shadow-xl transition-shadow rounded-lg overflow-hidden" href="{{ article.url }}">
+                        <a class="flex flex-col sm:max-lg:landscape:flex-row w-full shadow hocus:shadow-xl transition-shadow rounded-lg overflow-hidden" href="/article/{{ article._id }}">
                             <div class="aspect-[25/14] overflow-hidden">
                                 <img class="object-cover h-full w-full" src="{{ article.image }}" alt="{{ article.title }}">
                             </div>
                             <section class="p-8 pb-11">
                                 <h2 class="text-2xl font-bold">{{ article.title }}</h2>
-                                <p>{{ article.content }}</p>
+                                <p class="my-1 text-xl font-semibold">{{ article.abstract }}</p>
+                                <p class="my-1">{{ article.content }}</p>
                                 <p class="italic text-gray-600 mt-8 text-right">Par {{ article.author.firstname }} {{ article.author.lastname }}</p>
                                 <p class="text-gray-500 text-sm">Publié le {{ article.date }}</p>
                             </section>
