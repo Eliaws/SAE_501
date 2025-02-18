@@ -88,6 +88,12 @@ router.post([`/${base}/:id([a-f0-9]{24})`, `/${base}/add`], routeName("author_fo
         listErrors = e.response.data.errors;
         ressource = e.response.data.ressource || {};
     } finally {
+        if (!listErrors.length) {
+            req.flash(
+                "success",
+                isEdit ? "Élement mis à jour" : "Élement crée"
+            );
+        }
         if (listErrors.length || isEdit) {
             res.render("pages/back-end/authors/add-edit.njk", {
                 author: ressource,

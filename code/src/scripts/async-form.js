@@ -8,9 +8,9 @@ const submitForm = (e) => {
 
     console.log(formValues);
 
-    if(validator.isEmpty(formValues.lastname.trim())){
-        document.querySelector("[data-error-message='lastname]".classList.remove("hidden"))
-        //Display error message
+    if (validator.isEmpty(formValues.lastname.trim())) {
+        document.querySelector("[data-error-message='lastname]".classList.remove("hidden"));
+        // Display error message
         return;
     }
 }
