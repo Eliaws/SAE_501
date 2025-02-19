@@ -17,17 +17,17 @@ const messageSchema = new Schema({
     },
     content: {
         type: String,
-        required: [true, "Veuillez mettre un nom de famille"],
+        required: [true, "Veuillez mettre un message"],
     },
     identity: {
         type: String,
         enum: ["non_precise", "autre", "etudiant", "parent"],
         default: "non_precise",
-    }
+    },
 },
-    {
-        timestamps: { createdAt: "created_at", }
-    }
+{
+    timestamps: { createdAt: "created_at" },
+}
 );
 
 export default mongoose.model("Message", messageSchema);
