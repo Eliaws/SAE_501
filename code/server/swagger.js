@@ -8,6 +8,7 @@ import listArticles, { article } from "./swagger-schemas/article.js";
 import listCommentsArticle, { commentArticle } from "./swagger-schemas/comment-article.js";
 import listSAEs, { sae } from "./swagger-schemas/sae.js";
 import listAuthors, { author } from "./swagger-schemas/author.js";
+import listMessages, { message } from "./swagger-schemas/messages.js";
 
 import packageJSON from "../package.json" with { "type": "json" };
 
@@ -41,6 +42,8 @@ const options = {
                 SAE: sae,
                 ListAuthors: listAuthors,
                 Author: author,
+                Message: message,
+                ListMessages: listMessages,
                 Error: {
                     type: "object",
                     properties: {

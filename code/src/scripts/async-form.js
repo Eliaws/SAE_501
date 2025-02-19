@@ -16,5 +16,5 @@ const submitForm = (e) => {
 }
 
 document.querySelectorAll("[data-async-form]").forEach((item) => {
-    item.addEventListener("submit", submitForm)
-})
+    item.addEventListener("submit", submitForm);
+});
