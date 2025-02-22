@@ -68,6 +68,11 @@ router.get("/sur-les-medias(.html)?", async (req, res) => {
     });
 });
 
+router.get("/author(.html)?", async (req, res) => {
+    res.render("pages/front-end/author.njk", {
+    });
+});
+
 router.get("/article/:id", async (req, res) => {
     const options = {
         method: "GET",
@@ -83,5 +88,22 @@ router.get("/article/:id", async (req, res) => {
         article: result.data,
     });
 });
+
+router.get("/author/:id", async (req, res) => {
+    const options = {
+        method: "GET",
+        url: `${res.locals.base_url}/api/authors/${req.params.id}`,
+    };
+
+    let result = {};
+    try {
+        result = await axios(options);
+    } catch (_error) {}
+
+    res.render("pages/front-end/author.njk", {
+        author: result.data,
+    });
+});
+
 
 export default router;

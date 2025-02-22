@@ -12,7 +12,10 @@
     <!-- Header de l'article -->
     <header class="mb-6 text-center">
         <h1 class="text-3xl font-bold text-gray-800">{{ article.title }}</h1>
-        <p class="text-gray-600 mt-2">Par <span class="font-semibold">{{ article.author.firstname~' '~article.author.lastname }}</span> 
+        <p class="text-gray-600 mt-2">
+            Par <a href="/author/{{ article.author._id }}" class="font-semibold text-blue-500 hover:underline">
+                {{ article.author.firstname~' '~article.author.lastname }}
+            </a> 
             le <time datetime="{{ article.updated_at }}" class="italic">{{ article.updated_at|date("dd/LL/yyyy à HH:mm") }}</time>
         </p>
     </header>
@@ -28,14 +31,14 @@
     <section class="text-gray-700 leading-relaxed">
         <p>{{ article.content }}</p>
     </section>
+
+    <!-- Vidéo YouTube si disponible -->
+    {% if article.video_url %}
+    <div class="mt-6">
+        <iframe class="w-full h-64 md:h-96" src="{{ article.video_url }}" frameborder="0" allowfullscreen></iframe>
+    </div>
+    {% endif %}
 </article>
 
-<script>
-    document.addEventListener("scroll", function() {
-        const progressBar = document.getElementById("progress-bar");
-        const totalHeight = document.body.scrollHeight - window.innerHeight;
-        const progress = (window.scrollY / totalHeight) * 100;
-        progressBar.style.width = progress + "%";
-    });
-</script>
+{% include "components/front-end/barre-progression.njk" %}
 {% endblock %}
