@@ -1,20 +1,41 @@
 {% extends "layouts/front-end/base.njk" %}
 
-{% block title %}{{ article.title }}
-{% endblock %}
-
-
+{% block title %}{{ article.title }}{% endblock %}
 
 {% block main %}
-<article>
-    <header>
-        <h1>{{ article.title }}</h1>
-        <p>Par {{ article.author.firstname~' '~article.author.lastname }} le <time datetime="{{ article.updated_at }}">{{ article.updated_at|date("dd/LL/yyyy à HH:mm") }}</time></p> {# Modif de la date via fonction js en cours de recherche #}
+<article class="max-w-3xl mx-auto mt-10 p-6 bg-white shadow-lg rounded-lg">
+    <!-- Barre de progression -->
+    <div id="progress-container" class="w-full h-2 bg-gray-200 fixed top-0 left-0 z-50">
+        <div id="progress-bar" class="h-2 bg-green-500 w-0"></div>
+    </div>
+
+    <!-- Header de l'article -->
+    <header class="mb-6 text-center">
+        <h1 class="text-3xl font-bold text-gray-800">{{ article.title }}</h1>
+        <p class="text-gray-600 mt-2">Par <span class="font-semibold">{{ article.author.firstname~' '~article.author.lastname }}</span> 
+            le <time datetime="{{ article.updated_at }}" class="italic">{{ article.updated_at|date("dd/LL/yyyy à HH:mm") }}</time>
+        </p>
     </header>
-    <section>
+
+    <!-- Image de l'article si disponible -->
+    {% if article.image %}
+    <div class="mb-6">
+        <img src="{{ article.image }}" alt="Illustration de {{ article.title }}" class="w-full h-auto object-cover rounded-lg shadow-md">
+    </div>
+    {% endif %}
+
+    <!-- Contenu de l'article -->
+    <section class="text-gray-700 leading-relaxed">
         <p>{{ article.content }}</p>
     </section>
 </article>
-    
-   
+
+<script>
+    document.addEventListener("scroll", function() {
+        const progressBar = document.getElementById("progress-bar");
+        const totalHeight = document.body.scrollHeight - window.innerHeight;
+        const progress = (window.scrollY / totalHeight) * 100;
+        progressBar.style.width = progress + "%";
+    });
+</script>
 {% endblock %}
