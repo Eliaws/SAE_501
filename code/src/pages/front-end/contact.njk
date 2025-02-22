@@ -5,13 +5,8 @@
 
 
 {% block main %}
-    {% for item in list_errors %}
-        <p class="rounded-lg p-3 bg-red-100 text-red-800 border-solid border-x border-y border-red-700 mb-3">{{ item }}</p>
-    {% endfor %}
-    {% if messages.success %}
-        <p class="rounded-lg p-3 bg-green-100 text-green-800 border-solid border-x border-y border-green-700 mb-3">{{ messages.success }}</p>
-    {% endif %}
-    <form action="" data-form class="mt-5 max-w-md mx-auto" method="post" data-async-form="contact_form">
+    <div id="flash-container"></div>
+    <form action="" data-form class="mt-5 max-w-md mx-auto" method="post" enctype="application/json" data-async-form="contact_form">
         <div class="grid md:grid-cols-2 md:gap-6">
             <div class="relative z-0 w-full mb-5 group">
                 <input type="text" name="firstname" id="firstname" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-900 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />

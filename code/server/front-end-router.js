@@ -105,5 +105,26 @@ router.get("/author/:id", async (req, res) => {
     });
 });
 
+router.post("/nous-contacter(.html)?", async (req, res) => {
+    try {
+        // Envoi asynchrone des données au endpoint API
+        const response = await axios.post(
+            `${res.locals.base_url}/api/messages`,
+            req.body,
+            { headers: { "Content-Type": "application/json" } }
+        );
+        
+        req.flash(
+            "success",
+            "Votre message a bien été envoyé. Nous vous répondrons dans les plus brefs délais."
+        );
+        
+        return res.json({ message: response.data });
+    } catch (error) {
+        const listErrors = error.response?.data?.errors || ["Erreur lors de l'envoi du message"];
+        res.render("pages/front-end/contact.njk", { list_errors: listErrors });
+    }
+});
+
 
 export default router;
