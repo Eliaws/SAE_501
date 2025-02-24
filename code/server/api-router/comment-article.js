@@ -33,6 +33,8 @@ const base = "articles";
  *                      type: string
  *                    nickname:
  *                      type: string
+ *                      default: "Anonyme"
+ * 
  *     responses:
  *       201:
  *         description: Creates a comment for an article

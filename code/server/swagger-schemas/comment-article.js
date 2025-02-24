@@ -7,6 +7,7 @@ const commentArticle = {
         },
         nickname: {
             type: "string",
+            default: "Anonyme",
         },
         content: {
             type: "string",

@@ -19,6 +19,7 @@ const commentArticleSchema = new Schema(
                 true,
                 errorRequiredMessage("un nom d'utilisateur"),
             ],
+            default: "Anonyme",
             trim: true,
         },
         article: {

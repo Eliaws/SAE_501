@@ -6,6 +6,7 @@ import "/src/styles/scroll-shadow.css";
 
 import "./store-scroll-position.utils";
 import "./async-form";
+import "./async-comment";
 
 if (process.env.NODE_ENV === "development") {
     await import("./profiler-bar");

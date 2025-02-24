@@ -74,20 +74,45 @@ router.get("/author(.html)?", async (req, res) => {
 });
 
 router.get("/article/:id", async (req, res) => {
-    const options = {
+    const optionsArticle = {
         method: "GET",
         url: `${res.locals.base_url}/api/articles/${req.params.id}`,
     };
+    const optionsComment = {
+        method: "GET",
+        url: `${res.locals.base_url}/api/articles/${req.params.id}/comments`,
+    };
 
-    let result = {};
+    let resultArticle = {};
+    let resultComment = {};
     try {
-        result = await axios(options);
+        resultArticle = await axios(optionsArticle);
+        resultComment = await axios(optionsComment);
+        console.log(resultComment.data);
     } catch (_error) {}
 
     res.render("pages/front-end/article.njk", {
-        article: result.data,
+        article: resultArticle.data,
+        comments: resultComment.data,
     });
 });
+
+router.post("/article/:id/comments", async (req, res) => {
+    try {
+        const response = await axios.post(
+            `${res.locals.base_url}/api/articles/${req.params.id}/comments`,
+            req.body,
+            { headers: { "Content-Type": "application/json" } }
+        );
+
+        req.flash("success", "Votre commentaire a bien été posté.");
+        return res.json({ message: response.data });
+    } catch (error) {
+        const listErrors = error.response?.data?.errors || ["Erreur lors de l'envoi du commentaire"];
+        res.render("pages/front-end/article.njk", { list_errors: listErrors });
+    }
+});
+
 
 router.get("/author/:id", async (req, res) => {
     const options = {
