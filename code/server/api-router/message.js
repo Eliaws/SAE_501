@@ -1,8 +1,5 @@
 import express from "express";
-import mongoose from "mongoose";
 import querystring from "querystring";
-import routeName from "#server/utils/name-route.middleware.js";
-
 
 import Message from "#models/message.js";
 
@@ -69,9 +66,9 @@ router.post(`/${base}`, async (req, res) => {
         res.status(400).json({
             errors: [...Object.values(e?.errors).map((item) => item.message),
             ],
-        })
+        });
     }
-})
+});
 
 router.get(`/${base}`, async (req, res) => {
     const page = Math.max(1, Number(req.query.page) || 1);

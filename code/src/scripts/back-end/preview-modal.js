@@ -23,7 +23,7 @@ const formatBytes = (bytes, decimals = 2) => {
     const i = Math.floor(Math.log(bytes) / Math.log(k));
 
     return `${String(parseFloat((bytes / Math.pow(k, i)).toFixed(dm))).replace(".", ",")} ${sizes[i]}`;
-}
+};
 
 const getImageInfos = async (img) => {
     const blobQuery = await fetch(img.src);
@@ -88,7 +88,7 @@ listPreviewCurrentImageBtn.forEach((item) => {
             img = document.querySelector(`[data-preview-upload="${dataAttr}"]`);
         }
 
-        listImageModal.forEach((item) => item.src = img.src)
+        listImageModal.forEach((item) => item.src = img.src);
 
         const imgData = await getImageInfos(img);
 
