@@ -88,7 +88,6 @@ router.get("/article/:id", async (req, res) => {
     try {
         resultArticle = await axios(optionsArticle);
         resultComment = await axios(optionsComment);
-        console.log(resultComment.data);
     } catch (_error) {}
 
     res.render("pages/front-end/article.njk", {
