@@ -21,6 +21,11 @@
                     <td class="py-4 px-6 bg-transparent border-solid border-slate-200 border-b shadow-transparent" data-label="Contenu">
                         <p class="line-clamp-3 md:line-clamp-1" title="{{ item.content }}">{{ item.content }}</p>
                     </td>
+                    <td class="py-4 px-6 bg-transparent border-solid border-slate-200 border-b-2 @3xl/main:!border-b shadow-transparent lg:text-right align-middle">
+                        <div class="inline-flex gap-6 w-full justify-around">
+                            {{ list_actions.delete("messages_api" | routeName({ id: item._id }), item.title) }}
+                        </div>
+                    </td>
             {% else %}
                 <tr>
                     <td colspan="5" class="text-center bg-transparent border-solid border-slate-200 border-b py-4 px-6">Pas de contenu pour le moment</td>

@@ -18,7 +18,7 @@
                 <h2 class="text-4xl">
                     Liste SAEs
                 </h2>
-                <p class="text-sm">{{ list_saes.count }} élément {% if list_saes.count > 1 %}s{% endif %} au total - <span class="font-bold">Seuls les 9 derniers éléments sont affichés sur le site</span> </p>
+                <p class="text-sm">{{ list_saes.count }} élément{% if list_saes.count > 1 %}s{% endif %} au total - <span class="font-bold">Seuls les 9 derniers éléments sont affichés sur le site</span> </p>
             </div>  
             <a href="{{ "sae_form" | routeName }}" class="inline-flex gap-1 w-full sm:w-fit text-md text-white rounded-2xl items-center text-sm py-2 px-4 bg-blue-700 hocus:bg-blue-950 h-fit justify-center">
                 <svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
@@ -27,11 +27,6 @@
                 Ajouter une nouvelle SAE
             </a>
         </header>
-        {% if messages.success %}
-            <div class="px-6">
-                <p class="rounded-lg p-3 bg-green-100 text-green-800 border-solid border-x border-y border-green-700 mb-3">{{ messages.success }}</p>
-            </div>
-        {% endif %}
         {{ saes.table(list_saes)}}
         <footer class="flex justify-between px-4 flex-col @3xl/main:flex-row relative items-center">
             {{ pagination.item(list_saes) }}
