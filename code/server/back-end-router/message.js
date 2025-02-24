@@ -20,7 +20,7 @@ router.get(`/${base}`, async (req, res) => {
         result = await axios(options);
     } catch {}
     res.render("pages/back-end/messages/list.njk", {
-        list_messages: result.data.data,
+        list_messages: result.data,
         count: result.data.count,
     });
 });

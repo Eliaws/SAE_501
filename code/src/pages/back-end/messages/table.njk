@@ -1,0 +1,36 @@
+{% macro table(list) %}
+    <table class="w-full bg-white border-collapse">
+
+        <thead>
+            <tr class="text-slate-800">
+                <th class="font-bold px-6 text-left border-solid border-slate-200 border-b py-3 min-w-52">Prénom</th>
+                <th class="font-bold px-6 text-left border-solid border-slate-200 border-b py-3">Nom</th>
+                <th class="font-bold px-6 text-left border-solid border-slate-200 border-b py-3">Email</th>
+                <th class="font-bold px-6 text-left border-solid border-slate-200 border-b py-3">Contenu</th>
+                <th class="font-bold px-6 text-left border-solid border-slate-200 border-b py-3">Identité</th>
+                <th class="font-bold text-left border-solid border-slate-200 border-b hover:bg-blue-50">
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for item in list.data %}
+                <tr class="hover:bg-neutral-50 even:bg-blue-50">
+                    <td class="bg-transparent border-solid border-slate-200 border-b py-4 px-6 min-w-52" data-label="Prénom">{{ item.firstname }}</td>
+                    <td class="py-4 px-6 bg-transparent border-solid border-slate-200 border-b shadow-transparent" data-label="Nom">{{ item.lastname }}</td>
+                    <td class="bg-transparent border-solid border-slate-200 border-b py-4 px-6" data-label="Email">{{ item.email }}</td>
+                    <td class="py-4 px-6 bg-transparent border-solid border-slate-200 border-b shadow-transparent" data-label="Contenu">
+                        <p class="line-clamp-3 md:line-clamp-1" title="{{ item.content }}">{{ item.content }}</p>
+                    </td>
+                    <td class="py-4 px-6 bg-transparent border-solid border-slate-200 border-b-2 @3xl/main:!border-b shadow-transparent lg:text-right align-middle">
+                        <div class="inline-flex gap-6 w-full justify-around">
+                            {# AJOUTER ACTIONS #}
+                        </div>
+                    </td>
+            {% else %}
+                <tr>
+                    <td colspan="5" class="text-center bg-transparent border-solid border-slate-200 border-b py-4 px-6">Pas de contenu pour le moment</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endmacro %}
