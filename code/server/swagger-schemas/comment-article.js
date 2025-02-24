@@ -5,6 +5,9 @@ const commentArticle = {
             type: "string",
             pattern: "([0-9a-f]{24})",
         },
+        nickname: {
+            type: "string",
+        },
         content: {
             type: "string",
         },

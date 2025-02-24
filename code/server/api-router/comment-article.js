@@ -31,6 +31,8 @@ const base = "articles";
  *                  properties:
  *                    content:
  *                      type: string
+ *                    nickname:
+ *                      type: string
  *     responses:
  *       201:
  *         description: Creates a comment for an article

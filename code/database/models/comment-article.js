@@ -13,6 +13,14 @@ const commentArticleSchema = new Schema(
             ],
             trim: true,
         },
+        nickname: {
+            type: String,
+            required: [
+                true,
+                errorRequiredMessage("un nom d'utilisateur"),
+            ],
+            trim: true,
+        },
         article: {
             type: mongoose.Schema.Types.ObjectId,
             ref: "Article",
@@ -28,6 +36,7 @@ commentArticleSchema.methods.getClean = function () {
     const res = {
         _id: this._id,
         content: this.content,
+        nickname: this.nickname,
         article: this.article._id,
         created_at: this.created_at,
         updatedAt: this.updatedAt,

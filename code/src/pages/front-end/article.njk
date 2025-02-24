@@ -39,6 +39,29 @@
     </div>
     {% endif %}
 </article>
-
+    {% block commentaires_articles %}
+    <section>
+        <h2 class="text-2xl font-bold text-gray-800 mt-10 mb-4">Commentaires</h2>
+        <div class="max-w-3xl mx-auto">
+            <form action="" method="post" class="mb-6">
+                <label for="nickname" class="block mb-2 text-gray-700">Votre pseudonyme</label>
+                <input type="text" name="nickname" id="nickname" class="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:border-blue-500 focus:ring focus:ring-blue-500">
+                <label for="content" class="block mb-2 text-gray-700">Votre commentaire</label>
+                <textarea name="content" id="content" cols="30" rows="5" class="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:border-blue-500 focus:ring focus:ring-blue-500"></textarea>
+                <button type="submit" class="mt-2 bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600">Envoyer</button>
+            </form>
+        </div>
+        <div class="max-w-3xl mx-auto">
+            <ul>
+                {% for comment in article.comments %}
+                <li class="mb-4">
+                    <p class="text-gray-700">{{ comment.content }}</p>
+                    <p class="text-gray-600 text-sm mt-2">Par {{ comment.author.firstname~' '~comment.author.lastname }} le {{ comment.created_at|date("dd/LL/yyyy à HH:mm") }}</p>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </section>
+    {% endblock %}
 {% include "components/front-end/barre-progression.njk" %}
 {% endblock %}
