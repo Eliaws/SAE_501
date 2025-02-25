@@ -27,6 +27,13 @@
     </div>
     {% endif %}
 
+    {% if article.abstract %}
+    <!-- Abstract de l'article -->
+    <section class="text-gray-700 font-semibold text-lg leading-relaxed">
+        <p>{{ article.abstract }}</p>
+    </section>
+    {% endif %}
+
     <!-- Contenu de l'article -->
     <section class="text-gray-700 leading-relaxed">
         <p>{{ article.content }}</p>
