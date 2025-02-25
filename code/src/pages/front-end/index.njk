@@ -24,7 +24,7 @@
                                 <p class="my-1 text-xl font-semibold">{{ article.abstract }}</p>
                                 <p class="my-1">{{ article.content }}</p>
                                 <p class="italic text-gray-600 mt-8 text-right">Par {{ article.author.firstname }} {{ article.author.lastname }}</p>
-                                <p class="text-gray-500 text-sm">Publié le <time datetime="{{ article.updated_at }}">{{ article.updated_at|date("dd/LL/yyyy à HH:mm") }}</time></p>
+                                <p class="text-gray-500 text-sm">Publié le <time datetime="{{ article.created_at }}">{{ article.created_at|date("dd/LL/yyyy à HH:mm") }}</time></p>
                             </section>
                         </a>
                     </li>
