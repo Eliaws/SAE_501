@@ -56,6 +56,7 @@
                     <th class="font-bold px-6 py-3 text-left border-solid border-slate-200 border-b lg:hidden xl:[display:revert] @3xl/main:[display:revert]">Contenu</th>
                     <th class="font-bold px-6 py-3 text-left border-solid border-slate-200 border-b">Activé ?</th>
                     <th class="font-bold px-6 py-3 text-left border-solid border-slate-200 border-b">Auteur</th>
+                    <th class="font-bold px-6 py-3 text-left border-solid border-slate-200 border-b">Nombre commentaires</th>
                     <th class="font-bold text-left border-solid border-slate-200 border-b hover:bg-blue-50">
                         <a href="{{ "?sorting=" ~ sort_param }}" class="flex gap-2 px-6 py-3 items-center" aria-sort="{{ "ascending" if using_asc else "descending" }}" title="{{ sort_text }}" data-tooltip-anchor="sort">
                             <span>Dernière mise à jour</span>
@@ -91,6 +92,7 @@
                                 La rédaction
                             {% endif %}
                         </td>
+                        <td class="bg-transparent border-solid border-slate-200 border-b py-4 px-6" data-label="Nombre commentaires">{{ item.nb_comments }}</td>
                         <td class="bg-transparent border-solid border-slate-200 border-b py-4 px-6" data-label="Dernière mise à jour"><time datetime="{{ item.updated_at }}">{{ item.updated_at|date("dd/LL/yyyy à HH:mm") }}</time></td>
                         <td class="py-4 px-6 bg-transparent border-solid border-slate-200 border-b-2 @3xl/main:!border-b shadow-transparent lg:text-right align-middle">
                             <div class="inline-flex gap-6 w-full justify-around">

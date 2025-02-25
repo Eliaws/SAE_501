@@ -33,6 +33,7 @@
                     <th class="font-bold px-6 py-3 text-left border-solid border-slate-200 border-b">Titre</th>
                     <th class="font-bold px-6 py-3 text-left border-solid border-slate-200 border-b">Contenu</th>
                     <th class="font-bold px-6 py-3 text-left border-solid border-slate-200 border-b">Auteur</th>
+                    <th class="font-bold px-6 py-3 text-left border-solid border-slate-200 border-b">Nombre commentaires</th>
                     <th class="font-bold px-6 py-3 text-left border-solid border-slate-200 border-b">
                         Dernière mise à jour
                     </th>
@@ -54,6 +55,7 @@
                                 La rédaction
                             {% endif %}
                         </td>
+                        <td class="bg-transparent border-solid border-slate-200 border-b py-4 px-6" data-label="Nombre commentaires">{{ item.nb_comments }}</td>
                         <td class="bg-transparent border-solid border-slate-200 border-b py-4 px-6" data-label="Dernière mise à jour">
                             <time datetime="{{ item.updated_at }}">{{ item.updated_at|date("dd/LL/yyyy à HH:mm") }}</time>
                         </td>
