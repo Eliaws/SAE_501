@@ -1,4 +1,22 @@
 {% macro table(list) %}
+{% set list_identities = [
+    {
+        name: "Non précisé",
+        hash: "non_precise"
+    },
+    {
+        name: "Parent",
+        hash: "parent"
+    },
+    {
+        name: "Etudiant",
+        hash: "etudiant"
+    },
+    {
+        name: "Autre",
+        hash: "autre"
+    }
+] %}
     <table class="w-full bg-white border-collapse">
 
         <thead>
@@ -20,6 +38,13 @@
                     <td class="bg-transparent border-solid border-slate-200 border-b py-4 px-6" data-label="Email">{{ item.email }}</td>
                     <td class="py-4 px-6 bg-transparent border-solid border-slate-200 border-b shadow-transparent" data-label="Contenu">
                         <p class="line-clamp-3 md:line-clamp-1" title="{{ item.content }}">{{ item.content }}</p>
+                    </td>
+                    <td class="bg-transparent border-solid border-slate-200 border-b py-4 px-6" data-label="Identité">
+                        {% for identity in list_identities %}
+                            {% if item.identity == identity.hash %}
+                                {{ identity.name }}
+                            {% endif %}
+                        {% endfor %}
                     </td>
                     <td class="py-4 px-6 bg-transparent border-solid border-slate-200 border-b-2 @3xl/main:!border-b shadow-transparent lg:text-right align-middle">
                         <div class="inline-flex gap-6 w-full justify-around">
