@@ -32,15 +32,20 @@ const submitCommentForm = async (e) => {
         <div class="my-3 relative grid grid-cols-1 gap-4 p-4 mb-8 border rounded-lg bg-white shadow-lg">
             <div class="relative flex gap-4">
                 <div class="flex flex-col w-full">
-                    <div class="flex flex-row justify-between">
+                    <div class="flex flex-row justify-between relative">
                         <p class="relative text-xl whitespace-nowrap truncate overflow-hidden font-bold">${formValues.nickname}</p>
                         <a class="text-gray-500 text-xl" href="#"><i class="fa-solid fa-trash"></i></a>
+                        <div class="absolute top-0 right-0">
+                            <span class="absolute inline-flex h-5 w-5 animate-ping rounded-full bg-sky-400 opacity-75"></span>
+                            <span class="relative inline-flex size-5 rounded-full bg-sky-500"></span>
+                        </div>
                     </div>
                     <p class="text-gray-400 text-sm">il y a quelques secondes...</p>
                 </div>
             </div>
             <p class="-mt-4">${formValues.content}</p>
-        </div>`;
+        </div>
+        `;
     } catch (error) {
         const errors = error.response?.data?.errors || ["An error occurred"];
         let errorHTML = "";
