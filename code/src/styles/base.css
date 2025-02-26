@@ -52,9 +52,3 @@ img {
     to { transform: scaleX(1); }
 }
 
-/* Rend l'article scrollable pour activer l'animation */
-article {
-    max-height: 80vh; /* Définit la hauteur de la zone visible */
-    overflow-y: auto; /* Active le scroll interne */
-    scroll-behavior: smooth;
-}
