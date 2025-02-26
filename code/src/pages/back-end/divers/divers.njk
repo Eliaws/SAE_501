@@ -6,14 +6,68 @@
 {% endblock %}
 
 {% block main %}
-    <div class="bg-white rounded-2xl shadow-md pb-6">
-        <header class="mb-1 p-6 flex justify-between gap-2 lg:flex-row flex-col">
-            <div>
-                {% include "components/back-end/breadcrumb.njk" %}
-                <h2 class="text-4xl">
-                    Divers
-                </h2>
+    <div class="bg-white rounded-2xl shadow-md pb-6 p-6">
+        {% include "components/back-end/breadcrumb.njk" %}
+        <h2 class="text-4xl mb-6">Divers</h2>
+
+        <h3 class="text-2xl mb-4">Modifier la Journée Portes Ouvertes</h3>
+        {% for item in list_errors %}
+            <p class="rounded-lg p-3 bg-red-100 text-red-800 border-solid border-x border-y border-red-700 mb-3">{{ item }}</p>
+        {% endfor %}
+        {% if messages.success %}
+            <p class="rounded-lg p-3 bg-green-100 text-green-800 border-solid border-x border-y border-green-700 mb-3">{{ messages.success }}</p>
+        {% endif %}
+        <form action="" method="post" enctype="application/json" class="space-y-4" id="jpo-form">
+            <div class="grid grid-cols-3 gap-4">
+                <div>
+                    <label for="jpo_date" class="block text-gray-700 my-2 font-semibold">Date de la JPO :</label>
+                    <input type="text" id="jpo_date" name="jpo_date" value="{{ divers.jpo.date }}" 
+                        class="w-full border border-gray-300 rounded-lg p-2" disabled>
+                </div>
+                <div>
+                    <label for="jpo_start" class="block text-gray-700 my-2 font-semibold">Heure de début :</label>
+                    <input type="text" id="jpo_start" name="jpo_start" value="{{ divers.jpo.start_time }}" 
+                           class="w-full border border-gray-300 rounded-lg p-2" disabled>
+                </div>
+                <div>
+                    <label for="jpo_end" class="block text-gray-700 my-2 font-semibold">Heure de fin :</label>
+                    <input type="text" id="jpo_end" name="jpo_end" value="{{ divers.jpo.end_time }}" 
+                           class="w-full border border-gray-300 rounded-lg p-2" disabled>
+                </div>
             </div>
-        </header>
+
+            <div class="flex space-x-4 mt-4">
+                <button type="button" id="edit-btn" class="bg-yellow-500 text-white px-4 py-2 rounded-lg hover:bg-yellow-600">
+                    Modifier
+                </button>
+                <button type="submit" id="save-btn" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600" disabled>
+                    Enregistrer
+                </button>
+            </div>
+        </form>
     </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const editBtn = document.getElementById("edit-btn");
+            const saveBtn = document.getElementById("save-btn");
+            const form = document.getElementById("jpo-form");
+
+            editBtn.addEventListener("click", () => {
+                form.querySelectorAll("input").forEach(input => input.removeAttribute("disabled"));
+                saveBtn.removeAttribute("disabled");
+                editBtn.classList.add("opacity-50", "cursor-not-allowed","bg-gray-300");
+                editBtn.setAttribute("disabled", "true");
+
+            });
+
+            form.addEventListener("submit", () => {
+                setTimeout(() => {
+                    form.querySelectorAll("input").forEach(input => input.setAttribute("disabled", "true"));
+                    saveBtn.setAttribute("disabled", "true");
+                    editBtn.removeAttribute("disabled");
+                }, 500);
+            });
+        });
+    </script>
 {% endblock %}
