@@ -41,9 +41,9 @@
     </section>
 
     <!-- Vidéo YouTube si disponible -->
-    {% if article.video_url %}
+    {% if article.yt_video_id %}
     <div class="mt-6">
-        <iframe class="w-full h-64 md:h-96" src="{{ article.video_url }}" frameborder="0" allowfullscreen></iframe>
+        <iframe class="w-full h-64 md:h-96" src="{{ article.yt_video_id | youtubeEmbed }}" frameborder="0" allowfullscreen></iframe>
     </div>
     {% endif %}
 </article>

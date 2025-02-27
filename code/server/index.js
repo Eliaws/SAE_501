@@ -350,6 +350,15 @@ nunjucksEnv.addFilter("date", (value, format) => {
     return DateTime.fromISO(value).toFormat(format);
 });
 
+nunjucksEnv.addFilter("youtubeEmbed", (url) => {
+    // eslint-disable-next-line no-useless-escape
+    const regExp = /^.*(youtu\.be\/|v\/|e\/|u\/\w+\/|embed\/|shorts\/|v=)([^#\&\?]*).*/;
+    const match = url.match(regExp);
+    const videoId = (match && match[2].length === 11) ? match[2] : null;
+
+    return videoId ? `https://www.youtube.com/embed/${videoId}` : "";
+});
+
 const getContextData = (root) => {
     let res = {};
     const getThroughObj = (obj, parentKey) => {
