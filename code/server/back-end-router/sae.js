@@ -92,7 +92,7 @@ router
             if (!listErrors.length) {
                 req.flash(
                     "success",
-                    isEdit ? "Element mis à jour" : "Element crée"
+                    isEdit ? "Élement mis à jour" : "Élement crée"
                 );
             }
             if (isEdit || listErrors.length) {

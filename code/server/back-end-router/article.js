@@ -105,6 +105,10 @@ router.post([`/${base}/:id`, `/${base}/add`], upload.single("image"), async (req
         ressource = e.response.data.ressource || {};
     } finally {
         if (listErrors.length || isEdit) {
+            req.flash(
+                "success",
+                isEdit ? "Élement mis à jour" : "Élement crée"
+            );
             res.render("pages/back-end/articles/add-edit.njk", {
                 article: ressource,
                 list_errors: listErrors,
