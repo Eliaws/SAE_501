@@ -1,10 +1,13 @@
 import express from "express";
 import axios from "axios";
+import fs from "fs/promises";
+import path from "path";
 
 import routeName from "#server/utils/name-route.middleware.js";
 import parseManifest from "#server/utils/parse-manifest.js";
 
 const router = express.Router();
+const jsonJPO = path.join(process.cwd(), "src", "data", "divers.json");
 
 router.use(async (_req, res, next) => {
     const originalRender = res.render;
@@ -21,6 +24,7 @@ router.use(async (_req, res, next) => {
 });
 
 router.get("/", routeName("homepage"), async (req, res) => {
+    const diversDataJPO = JSON.parse(await fs.readFile(jsonJPO, "utf-8"));
     const queryParams = new URLSearchParams(req.query).toString();
     const options = {
         method: "GET",
@@ -33,6 +37,7 @@ router.get("/", routeName("homepage"), async (req, res) => {
 
     res.render("pages/front-end/index.njk", {
         list_articles: result.data.data,
+        diversDataJPO: diversDataJPO.jpo,
     });
 });
 
