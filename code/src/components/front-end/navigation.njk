@@ -1,10 +1,9 @@
 <nav class="max-w-[1200px] mx-auto" role="navigation" aria-label="Menu principal">
-  <ul data-navigation="front-end" class="horizontal-scroll-shadow flex md:justify-end gap-x-10 overflow-x-auto sm:mr-0 mt-10 before:!-mt-0.5 before:!pt-0 after:!-mt-0.5 after:!pt-0">
+  
+  {# Version Desktop  #}
+  <ul data-navigation="front-end" class="hidden md:flex md:justify-end gap-x-10 overflow-x-auto sm:mr-0 mt-10">
     {% for menu_item in menu %}
-      <li class="
-        {{ 'supports-[animation-timeline]:-ml-9' if loop.first else '' }}
-        {{ 'supports-[animation-timeline]:-mr-9' if loop.last else '' }}
-      ">
+      <li>
         <a class="
           block whitespace-nowrap text-lg hocus:text-pink-600 
           {{ 'text-pink-600 font-bold underline' if activePage == menu_item.name | lower else '' }}
@@ -15,4 +14,18 @@
       </li>
     {% endfor %}
   </ul>
+
+  {#  Version Mobile  #}
+  <div class="md:hidden mt-5">
+    <label for="menu-select" class="block text-lg font-bold mb-2">Menu déroulant</label>
+    <select id="menu-select" class="w-full p-2 border rounded">
+      {% for menu_item in menu %}
+        <option value="{{ menu_item.link }}" 
+          {{ 'selected' if activePage == menu_item.name | lower else '' }}>
+          {{ menu_item.name }}
+        </option>
+      {% endfor %}
+    </select>
+  </div>
+
 </nav>

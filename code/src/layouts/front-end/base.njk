@@ -35,6 +35,15 @@
         {% include "components/profiler.njk" %}
         
         {% include "components/front-end/navigation.njk" %}
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                const menuSelect = document.getElementById("menu-select");
+                menuSelect.addEventListener("change", function () {
+            window.location.href = this.value;
+         });
+         });
+        </script>
+
         {% include "components/front-end/hero.njk" %}
 
         <main class="max-w-[1200px] mx-auto @container/main">
