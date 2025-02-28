@@ -49,8 +49,10 @@
                     <td class="py-4 px-6 bg-transparent border-solid border-slate-200 border-b-2 @3xl/main:!border-b shadow-transparent lg:text-right align-middle">
                         <div class="inline-flex gap-6 w-full justify-around">
                             {# AJOUTER ACTIONS #}
+                        <a href="/admin/messages/{{ item._id }}" class="text-blue-500 hover:underline">Détails</a>
                         </div>
                     </td>
+                </tr>
             {% else %}
                 <tr>
                     <td colspan="5" class="text-center bg-transparent border-solid border-slate-200 border-b py-4 px-6">Pas de contenu pour le moment</td>

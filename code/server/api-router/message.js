@@ -105,6 +105,21 @@ router.get(`/${base}`, async (req, res) => {
     }
 });
 
+router.get(`/${base}/:id`, async (req, res) => {
+    try {
+        const ressource = await Message.findById(req.params.id);
+        res.status(200).json(ressource);
+    } catch (e) {
+        res.status(400).json({
+            errors: [
+                ...Object.values(
+                    e?.errors || [{ message: e?.message || "Il y a eu un problème" }]
+                ).map(val => val.message),
+            ],
+        });
+    }
+});
+
 
 
 

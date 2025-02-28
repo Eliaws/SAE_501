@@ -1,0 +1,51 @@
+{% extends "layouts/back-end/base.njk" %}
+{% set active_menu_message = "messages" %}
+
+{% block title %}
+        Détails Message
+{% endblock %}
+
+{% block main %}
+    <div class="bg-white rounded-2xl shadow-md pb-6">
+        <header class="mb-1 p-6 gap-2 @3xl/main:gap-0 flex justify-between @3xl/main:flex-row flex-col">
+            <div>
+                {% include "components/back-end/breadcrumb.njk" %}
+                <h2 class="text-4xl">
+                    Détails Message
+                </h2>
+            </div>
+        </header>
+        <div class="px-6">
+            <div class="grid grid-cols-1 gap-4">
+                <div>
+                    <h3 class="text-2xl font-bold my-2">Sujet</h3>
+                    <div>
+                        <p>{{ message.content }}</p>
+                    </div>
+                </div>
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <h3 class="text-2xl font-bold">Nom</h3>
+                        <p>{{ message.lastname }}</p>
+                    </div>
+                    <div>
+                        <h3 class="text-2xl font-bold">Prénom</h3>
+                        <p>{{ message.firstname }}</p>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-2xl font-bold">Email</h3>
+                    <p>{{ message.email }}</p>
+                </div>
+                <div>
+                    <h3 class="text-2xl font-bold">Message</h3>
+                    <p>{{ message.message }}</p>
+                </div>
+                <div>
+                    <h3 class="text-2xl font-bold">Date d'envoi</h3>
+                    <p>{{ message.created_at|date("dd/LL/yyyy à HH:mm") }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -25,5 +25,20 @@ router.get(`/${base}`, async (req, res) => {
     });
 });
 
+// Get single message
+router.get(`/${base}/:id`, async (req, res) => {
+    const options = {
+        method: "GET",
+        url: `${res.locals.base_url}/api/${base}/${req.params.id}`,
+    };
+    let result = {};
+    try {
+        result = await axios(options);
+    } catch {}
+    res.render("pages/back-end/messages/detailsMessage.njk", {
+        message: result.data,
+    });
+});
+
 export default router;
 
