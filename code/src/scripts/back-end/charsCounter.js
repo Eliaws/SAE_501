@@ -1,13 +1,11 @@
-{% block script %}
-<script>
-document.addEventListener('DOMContentLoaded', function () {
-    const textareas = document.querySelectorAll('textarea[data-chars-limit]');
+document.addEventListener("DOMContentLoaded", function () {
+    const textareas = document.querySelectorAll("textarea[data-chars-limit]");
 
     textareas.forEach(textarea => {
-        const charsLimit = parseInt(textarea.getAttribute('data-chars-limit'), 10);
+        const charsLimit = parseInt(textarea.getAttribute("data-chars-limit"), 10);
         const counterDescription = textarea.nextElementSibling;
 
-        textarea.addEventListener('input', function () {
+        textarea.addEventListener("input", function () {
             const remainingChars = charsLimit - textarea.value.length;
             counterDescription.textContent = `${remainingChars} caractères restants`;
         });
@@ -17,6 +15,3 @@ document.addEventListener('DOMContentLoaded', function () {
         counterDescription.textContent = `${initialRemainingChars} caractères restants`;
     });
 });
-
-</script>
-{% endblock %}

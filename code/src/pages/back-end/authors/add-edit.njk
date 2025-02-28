@@ -51,7 +51,7 @@
                     <input class="block bg-white w-full border border-slate-300 rounded-md py-2 pr-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm" type="text" name="email" value="{{ author.email }}"/>
                 </label>
                 <label class="block mb-4">
-                    <span class="font-bold text-slate-700">Bio de l'author</span>
+                    <span class="font-bold text-slate-700">Bio de l'auteur</span>
                     <textarea name="bio" cols="15" rows="5" maxlength="{{ chars_limit }}" data-chars-limit="{{ chars_limit }}" class="block bg-white w-full border border-slate-300 rounded-md py-2 pr-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm" aria-describedby="counter_description">{{ author.bio }}</textarea>
                     <p class="text-sm" id="counter_description">
 						{{ chars_limit }} caractères restants
@@ -81,5 +81,4 @@
             </form>
         </div>
     </div>
-{% include "components/back-end/charsCounter.njk" %}
 {% endblock %}
