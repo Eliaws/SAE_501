@@ -2,6 +2,7 @@ import express from "express";
 import axios from "axios";
 import fs from "fs/promises";
 import path from "path";
+import querystring from "querystring";
 
 import routeName from "#server/utils/name-route.middleware.js";
 import parseManifest from "#server/utils/parse-manifest.js";
@@ -26,9 +27,10 @@ router.use(async (_req, res, next) => {
 router.get("/", routeName("homepage"), async (req, res) => {
     const diversDataJPO = JSON.parse(await fs.readFile(jsonJPO, "utf-8"));
     const queryParams = new URLSearchParams(req.query).toString();
+    const queryParamsPagination = querystring.stringify({ per_page: 3 });
     const options = {
         method: "GET",
-        url: `${res.locals.base_url}/api/articles?${queryParams}&is_active=true`,
+        url: `${res.locals.base_url}/api/articles?${queryParams}&is_active=true&${queryParamsPagination}`,
     };
     let result = {};
     try {
@@ -38,6 +40,11 @@ router.get("/", routeName("homepage"), async (req, res) => {
     res.render("pages/front-end/index.njk", {
         list_articles: result.data.data,
         diversDataJPO: diversDataJPO.jpo,
+        paginator: {
+            page: result.data.page || 1,  
+            total_pages: result.data.total_pages || 1,  
+            query_params: queryParams,  
+        },
     });
 });
 

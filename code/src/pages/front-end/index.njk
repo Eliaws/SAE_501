@@ -1,6 +1,7 @@
 {% extends "layouts/front-end/base.njk" %}
 {% set activePage = 'accueil' %}
 {% set bubble_color = "vert" %}
+{% import "components/back-end/pagination.njk" as pagination with context %}
 
 
 
@@ -14,6 +15,7 @@
         <h1 class="text-3xl font-bold lg:col-span-2 mt-6 lg:mt-0">Articles sur le BUT MMI</h1>
             <ul class="flex md:flex-row sm:landscape:flex-col flex-col lg:flex-col gap-6">
                 {% for article in list_articles %}
+
                     <li>
                         <a class="flex flex-col sm:max-lg:landscape:flex-row w-full shadow hocus:shadow-xl transition-shadow rounded-lg overflow-hidden" href="/article/{{ article._id }}">
                             <div class="aspect-[25/14] overflow-hidden">
@@ -30,6 +32,9 @@
                     </li>
                 {% endfor %}
             </ul>
+            <!-- Pagination -->
+       
+       
 
         <a class="jpo-banniere rounded-lg overflow-hidden order-first lg:order-none" href="https://www.cyu.fr/formation/construire-son-projet/salons-journee-portes-ouvertes" title="Ouverture dans un nouvel onglet">
             <div class="logo">
@@ -44,6 +49,7 @@
                 </p>
                 <p class="en-savoir-plus">EN SAVOIR PLUS</p>
             </section>
+             {{ pagination.item(paginator) }}
         </a>
     </section>
 {% endblock %}
