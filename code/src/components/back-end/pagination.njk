@@ -35,14 +35,6 @@
         </div>
     </nav>
     {% if paginator.total_pages > 1 %}
-        <div class="flex gap-3 items-center flex-col @3xl/main:flex-row z-10">
-            <label for="select-page" class="hidden @3xl/main:block">Aller à la page :</label>
-            <select id="select-page" data-paginator="{{ name }}">
-                {% for i in range(1, paginator.total_pages + 1) %}
-                    <option {{ "selected" if i == paginator.page else "" }} value="{{ i }}">{{ 'Page ' ~ i }}</option>
-                {% endfor %}
-            </select>
-        </div>
         <nav class="flex justify-between px-4 absolute @3xl/main:static inset-0" role="navigation" aria-label="Pagination">
             {{ previous("?page=" ~ (paginator.page - 1) ~ query_params, paginator.page <= 1) }}
             <ul class="flex">
@@ -74,5 +66,13 @@
             </ul>
             {{ next("?page=" ~ (paginator.page + 1) ~ query_params, paginator.page >= paginator.total_pages) }}
         </nav>
+        <div class="flex gap-3 items-center flex-col @3xl/main:flex-row z-10">
+            <label for="select-page" class="hidden @3xl/main:block">Aller à la page :</label>
+            <select id="select-page" data-paginator="{{ name }}">
+                {% for i in range(1, paginator.total_pages + 1) %}
+                    <option {{ "selected" if i == paginator.page else "" }} value="{{ i }}">{{ 'Page ' ~ i }}</option>
+                {% endfor %}
+            </select>
+        </div>
     {% endif %}
 {% endmacro %}

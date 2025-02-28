@@ -26,28 +26,45 @@ router.use(async (_req, res, next) => {
 
 router.get("/", routeName("homepage"), async (req, res) => {
     const diversDataJPO = JSON.parse(await fs.readFile(jsonJPO, "utf-8"));
-    const queryParams = new URLSearchParams(req.query).toString();
-    const queryParamsPagination = querystring.stringify({ per_page: 3 });
+  
+    // On crée un objet URLSearchParams basé sur req.query
+    const params = new URLSearchParams(req.query);
+    // Supprimer toutes les occurrences de "page"
+    params.delete("page");
+    // Puis, si req.query.page existait, on le ré-ajoute (en prenant la première valeur s'il s'agit d'un tableau)
+    if (req.query.page) {
+        const page = Array.isArray(req.query.page) ? req.query.page[0] : req.query.page;
+        params.set("page", page);
+    }
+  
+    // Forcer les paramètres is_active et per_page
+    params.set("is_active", "true");
+    params.set("per_page", "3");
+
     const options = {
         method: "GET",
-        url: `${res.locals.base_url}/api/articles?${queryParams}&is_active=true&${queryParamsPagination}`,
+        url: `${res.locals.base_url}/api/articles?${params.toString()}`,
     };
+
     let result = {};
     try {
         result = await axios(options);
-    } catch (_error) {}
-
+    } catch (error) {
+        console.error("Erreur lors de la récupération des articles :", error);
+    }
+  
     res.render("pages/front-end/index.njk", {
         list_articles: result.data.data,
         diversDataJPO: diversDataJPO.jpo,
         paginator: {
             page: result.data.page || 1,  
             total_pages: result.data.total_pages || 1,  
-            query_params: queryParams,  
+            query_params: params.toString(),  
         },
     });
 });
 
+  
 // "(.html)?" makes ".html" optional in the url
 router.get("/a-propos(.html)?", routeName("about"), async (_req, res) => {
     const options = {
