@@ -4,6 +4,43 @@
 - Tedj SALHI
 
 
-## But du projet
+# 🏗️ SAE_501 : Projet Backoffice & Site avec Express, Vite, Nunjucks, MongoDB
 
-Le but de ce projet est de développer une application capable de gérer les données des étudiants, y compris l'inscription, la gestion des cours et le suivi des performances académiques. L'application doit être intuitive, sécurisée et facilement extensible pour répondre aux besoins futurs de l'institution.
+Bienvenue dans votre application **Backoffice & Site Web** construite avec **Express**, **Vite**, **Nunjucks** et **MongoDB**. Ce projet permet de gérer des articles, les auteurs, les projets, un système de contact, et d'autres fonctionnalités administratives.
+
+---
+
+## 🚀 **Installation & Lancement du Projet**
+
+### 1️⃣ **Cloner le projet**
+```sh
+git clone https://github.com/Eliaws/SAE_501.git
+```
+```sh
+cd code/
+```
+2️⃣ Installer les dépendances
+```sh
+npm install
+```
+3️⃣ Lancer l'application
+```sh
+npm start
+```
+📌 L'application sera disponible sur http://localhost:3900
+
+🏗️ Technologies utilisées
+
+* Backend : Express.js
+
+* Frontend : Vite.js
+
+* Template Engine : Nunjucks
+
+* Base de données : MongoDB
+
+* ORM : Mongoose
+
+---
+
+✨ Merci d'utiliser cette application ! 🚀
