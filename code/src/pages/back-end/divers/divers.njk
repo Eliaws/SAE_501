@@ -19,7 +19,7 @@
             {% endif %}
         </div>
 
-        <h3 class="text-2xl mb-4">Modifier la Journée Portes Ouvertes</h3>
+        <h3 class="text-2xl font-semibold mb-4">Modifier la Journée Portes Ouvertes</h3>
         <form action="" method="post" class="space-y-4" id="jpo-form">
             <div class="grid grid-cols-3 gap-4">
                 <div>
@@ -40,13 +40,24 @@
             </div>
 
             <div class="flex space-x-4 mt-4">
-                <button type="button" id="edit-btn" class="bg-orange-500 text-white px-4 py-2 rounded-lg hover:bg-orange-600">
+                <button type="button" id="edit-btn" class="bg-orange-500 text-white px-10 py-2 rounded-lg hover:bg-orange-600">
                     Modifier
                 </button>
-                <button type="submit" id="save-btn" class="bg-gray-500 opacity-50 cursor-not-allowed text-white px-4 py-2 rounded-lg hover:bg-gray-400" disabled>
+                <button type="submit" id="save-btn" class="bg-gray-500 opacity-50 cursor-not-allowed text-white px-10 py-2 rounded-lg hover:bg-gray-400" disabled>
                     Enregistrer
                 </button>
             </div>
         </form>
+
+        <div class="py-6">
+        <h2 class="text-2xl font-semibold mb-4">Choisir un thème :</h2>
+        <div class="justify-center flex space-x-4">
+            <button class="theme-btn bg-blue-500 text-white px-10 py-2 rounded" data-theme-color="#bfdbfe">Bleu</button>
+            <button class="theme-btn bg-red-500 text-white px-10 py-2 rounded" data-theme-color="#EF4444">Rouge</button>
+            <button class="theme-btn bg-green-500 text-white px-10 py-2 rounded" data-theme-color="#10B981">Vert</button>
+            <button class="theme-btn bg-orange-500 text-white px-10 py-2 rounded" data-theme-color="#F97316">Orange</button>
+            <button class="theme-btn bg-purple-500 text-white px-10 py-2 rounded" data-theme-color="#8B5CF6">Violet</button>
+            <button class="theme-btn bg-white text-black px-10 py-2 rounded border" data-theme-color="#f5f5f5">Blanc</button>
+        </div>
     </div>
 {% endblock %}

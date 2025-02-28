@@ -34,7 +34,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
             flashContainer.innerHTML = `<p class="rounded-lg p-3 bg-green-100 text-green-800 border-solid border-x border-y border-green-700 mb-3">${response.data.message}</p>`;
         } catch (error) {
-            console.error(error);
             const errorMsg = error.response?.data?.message || "Erreur lors de la mise à jour.";
             flashContainer.innerHTML = `<p class="rounded-lg p-3 bg-red-100 text-red-800 border-solid border-x border-y border-red-700 mb-3">${errorMsg}</p>`;
         }

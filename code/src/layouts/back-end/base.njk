@@ -9,7 +9,7 @@
             {% endblock %}
             - Administration SAÉ 501</title>
 
-        <meta name="theme-color" content="#bfdbfe"/>
+        <meta name="themeColor" content="#bfdbfe"/>
         <meta name="robots" content="noindex, nofollow">
 
         <link rel="stylesheet" href="/styles/reset.css">
@@ -31,7 +31,7 @@
     </head>
     <body class="min-h-screen">
         {% include "components/profiler.njk" %}
-        <div class="absolute w-full min-h-[40vh] z-[-1] bg-gradient-to-b from-blue-200 to-neutral-100"></div>
+        <div name="colorTheme" class="absolute w-full min-h-[40vh] z-[-1] bg-gradient-to-b from-blue-200 to-neutral-100"></div>
         <div class="mr-[max(env(safe-area-inset-right),_theme(space.6))] ml-[max(env(safe-area-inset-left),_theme(space.6))] py-5 flex gap-6 flex-col md:flex-row">
             {% include "components/back-end/navigation.njk" %}
             <main class="basis-full @container/main">

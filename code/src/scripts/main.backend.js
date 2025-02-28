@@ -16,6 +16,7 @@ import "./back-end/tooltip-manager.js";
 import "./back-end/breadcrumb-modal.js";
 import "./back-end/diversJPOform.js";
 import "./back-end/beforeUnload.js";
+import "./back-end/themeBackOffice.js";
 import "/src/scripts/store-scroll-position.utils";
 
 if (process.env.NODE_ENV === "development") {
