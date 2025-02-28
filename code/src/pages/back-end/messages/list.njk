@@ -1,5 +1,5 @@
 {% extends "layouts/back-end/base.njk" %}
-{% set active_menu_message = "messages" %}
+{% set active_menu_item = "messages" %}
 {% set using_asc = query_string_params.sorting == "asc" %}
 {% set sort_param = "desc" if using_asc == true else "asc" %}
 {% set sort_text = "Trier du plus récent au plus ancien" if using_asc == true else "Trier du plus ancien au plus récent" %}
