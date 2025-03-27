@@ -21,6 +21,7 @@ export default {
                 14: "4.25rem",
             },
             containers: {
+                "3xl": "48rem",
                 "5.5xl": "69rem",
             },
             transitionProperty: {
