@@ -1,7 +1,7 @@
 import tailwindcss from "@vituum/vite-plugin-tailwindcss";
 
 export default {
-    base: "./",
+    base: "./code/",
     css: {
         devSourcemap: true,
     },
